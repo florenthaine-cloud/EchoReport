@@ -39,15 +39,38 @@ body{
   margin:0 auto;
 }
 
-h1{
-  margin:0 0 6px;
+/* =========================
+   EN-TÊTE
+========================= */
+
+.app-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.app-icon{
+  width:42px;
+  height:42px;
+  border-radius:10px;
+  flex-shrink:0;
+}
+
+.app-header h1{
+  margin:0;
   font-size:28px;
 }
 
 .subtitle{
   color:var(--muted);
-  margin-bottom:20px;
+  margin:3px 0 0;
+  font-size:15px;
 }
+
+/* =========================
+   SECTIONS
+========================= */
 
 .section{
   background:var(--card);
@@ -91,15 +114,19 @@ textarea{
 }
 
 textarea{
-  min-height:220px;
+  min-height:240px;
   resize:vertical;
-  line-height:1.5;
+  line-height:1.55;
 }
 
 .measure-title{
   font-weight:700;
   margin:18px 0 10px;
 }
+
+/* =========================
+   BOUTONS
+========================= */
 
 .buttons{
   display:flex;
@@ -138,6 +165,10 @@ button.danger{
   color:white;
 }
 
+/* =========================
+   BOUTONS DU BAS
+========================= */
+
 .report-actions{
   display:flex;
   gap:10px;
@@ -149,27 +180,60 @@ button.danger{
   flex:1 1 180px;
 }
 
+/* =========================
+   NOTES
+========================= */
+
 .note{
   color:var(--muted);
   font-size:14px;
   margin-top:8px;
 }
 
+/* =========================
+   CRÉDIT
+========================= */
+
+.app-credit{
+  text-align:center;
+  margin-top:25px;
+  padding-bottom:10px;
+  color:#8e8e93;
+  font-size:11px;
+  font-weight:400;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:600px){
+
   body{
     padding:12px;
+    padding-bottom:30px;
   }
 
-  h1{
+  .app-header h1{
     font-size:24px;
+  }
+
+  .app-icon{
+    width:40px;
+    height:40px;
+    border-radius:9px;
   }
 
   .section{
     padding:14px;
   }
 
+  .buttons{
+    flex-direction:column;
+  }
+
   .buttons button{
-    flex:1 1 100%;
+    width:100%;
   }
 
   .report-actions{
@@ -179,6 +243,7 @@ button.danger{
   .report-actions button{
     width:100%;
   }
+
 }
 </style>
 </head>
@@ -187,12 +252,35 @@ button.danger{
 
 <div class="container">
 
-<h1>EchoReport</h1>
-<div class="subtitle">
-  Générateur de compte rendu échocardiographique
+<!-- =========================
+     EN-TÊTE
+========================= -->
+
+<div class="app-header">
+
+  <img
+    src="apple-touch-icon.png"
+    alt="EchoReport"
+    class="app-icon"
+  >
+
+  <div>
+
+    <h1>EchoReport</h1>
+
+    <div class="subtitle">
+      Générateur de compte rendu échocardiographique
+    </div>
+
+  </div>
+
 </div>
 
-<!-- BOUTONS DU HAUT -->
+
+<!-- =========================
+     BOUTONS DU HAUT
+========================= -->
+
 <div class="buttons">
 
   <button id="normal" class="green">
@@ -219,12 +307,17 @@ button.danger{
 </div>
 
 
-<!-- 1. VG -->
+<!-- =========================
+     1. VENTRICULE GAUCHE
+========================= -->
+
 <div class="section">
+
 <h2>1. Ventricule gauche</h2>
 
 <div class="field">
 <label for="lvSize">Taille</label>
+
 <select id="lvSize">
 <option>Non renseigné</option>
 <option>De taille normale</option>
@@ -235,8 +328,10 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
 <label for="lvWall">Épaisseur pariétale</label>
+
 <select id="lvWall">
 <option>Non renseigné</option>
 <option>Épaisseur pariétale normale</option>
@@ -245,8 +340,10 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
 <label for="lvHType">Type d’hypertrophie</label>
+
 <select id="lvHType">
 <option>Non renseigné</option>
 <option>Hypertrophie concentrique</option>
@@ -257,8 +354,10 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
 <label for="basalBulge">Bourrelet baso-septal</label>
+
 <select id="basalBulge">
 <option>Non renseigné</option>
 <option>Absence de bourrelet baso-septal</option>
@@ -267,37 +366,47 @@ button.danger{
 </select>
 </div>
 
-<div class="measure-title">Mesures du ventricule gauche</div>
+
+<div class="measure-title">
+Mesures du ventricule gauche
+</div>
+
 
 <div class="field">
 <label for="lvDd">Diamètre télédiastolique VG (mm)</label>
 <input id="lvDd" type="text" placeholder="ex. 52">
 </div>
 
+
 <div class="field">
 <label for="lvDs">Diamètre télésystolique VG (mm)</label>
 <input id="lvDs" type="text" placeholder="ex. 34">
 </div>
+
 
 <div class="field">
 <label for="septalThickness">Épaisseur septale (mm)</label>
 <input id="septalThickness" type="text" placeholder="ex. 10">
 </div>
 
+
 <div class="field">
 <label for="lvEdv">Volume télédiastolique VG (mL)</label>
 <input id="lvEdv" type="text" placeholder="ex. 120">
 </div>
+
 
 <div class="field">
 <label for="lvEsv">Volume télésystolique VG (mL)</label>
 <input id="lvEsv" type="text" placeholder="ex. 50">
 </div>
 
+
 <div class="field">
 <label for="lvEdvi">Volume télédiastolique indexé (mL/m²)</label>
 <input id="lvEdvi" type="text" placeholder="ex. 60">
 </div>
+
 
 <div class="field">
 <label for="lvEsvi">Volume télésystolique indexé (mL/m²)</label>
@@ -307,12 +416,17 @@ button.danger{
 </div>
 
 
-<!-- 2. FONCTION SYSTOLIQUE -->
+<!-- =========================
+     2. FONCTION SYSTOLIQUE
+========================= -->
+
 <div class="section">
+
 <h2>2. Fonction systolique</h2>
 
 <div class="field">
 <label for="ef">FEVG</label>
+
 <select id="ef">
 <option>Non renseigné</option>
 <option>FEVG conservée</option>
@@ -322,8 +436,10 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
 <label for="wallMotion">Cinétique pariétale</label>
+
 <select id="wallMotion">
 <option>Non renseigné</option>
 <option>Absence de trouble de la cinétique segmentaire</option>
@@ -332,22 +448,44 @@ button.danger{
 </select>
 </div>
 
-<div class="measure-title">Mesure de la FEVG</div>
+
+<div class="measure-title">
+Mesure de la FEVG
+</div>
+
 
 <div class="field">
-<label for="efValue">FEVG visuellement estimée</label>
-<input id="efValue" type="text" placeholder="ex. 60 % ou 55–60 %">
-</div>
+<label for="efValue">
+FEVG visuellement estimée
+</label>
+
+<input
+id="efValue"
+type="text"
+placeholder="ex. 60 % ou 55–60 %"
+>
 
 </div>
 
+</div>
 
-<!-- 3. DIASTOLIQUE -->
+
+<!-- =========================
+     3. DIASTOLIQUE
+========================= -->
+
 <div class="section">
-<h2>3. Fonction diastolique et pressions de remplissage</h2>
+
+<h2>
+3. Fonction diastolique et pressions de remplissage
+</h2>
+
 
 <div class="field">
-<label for="diastolic">Fonction diastolique</label>
+<label for="diastolic">
+Fonction diastolique
+</label>
+
 <select id="diastolic">
 <option>Non renseigné</option>
 <option>Fonction diastolique normale</option>
@@ -358,8 +496,12 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
-<label for="filling">Pressions de remplissage</label>
+<label for="filling">
+Pressions de remplissage
+</label>
+
 <select id="filling">
 <option>Non renseigné</option>
 <option>Pressions de remplissage normales</option>
@@ -368,8 +510,12 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
-<label for="mitralFlow">Flux mitral</label>
+<label for="mitralFlow">
+Flux mitral
+</label>
+
 <select id="mitralFlow">
 <option>Non renseigné</option>
 <option>Normal</option>
@@ -379,27 +525,35 @@ button.danger{
 </select>
 </div>
 
-<div class="measure-title">Mesures de fonction diastolique</div>
+
+<div class="measure-title">
+Mesures de fonction diastolique
+</div>
+
 
 <div class="field">
 <label for="ee">E/e’</label>
 <input id="ee" type="text" placeholder="ex. 8">
 </div>
 
+
 <div class="field">
 <label for="eWave">Onde E mitrale (cm/s)</label>
 <input id="eWave" type="text" placeholder="ex. 80">
 </div>
+
 
 <div class="field">
 <label for="aWave">Onde A mitrale (cm/s)</label>
 <input id="aWave" type="text" placeholder="ex. 70">
 </div>
 
+
 <div class="field">
 <label for="eseptal">e’ septal (cm/s)</label>
 <input id="eseptal" type="text" placeholder="ex. 7">
 </div>
+
 
 <div class="field">
 <label for="elateral">e’ latéral (cm/s)</label>
@@ -409,12 +563,20 @@ button.danger{
 </div>
 
 
-<!-- 4. AORTE -->
+<!-- =========================
+     4. AORTE
+========================= -->
+
 <div class="section">
-<h2>4. Racine aortique et aorte ascendante tubulaire</h2>
+
+<h2>
+4. Racine aortique et aorte ascendante tubulaire
+</h2>
+
 
 <div class="field">
 <label for="aorta">Aspect</label>
+
 <select id="aorta">
 <option>Non renseigné</option>
 <option>Dimensions normales</option>
@@ -423,37 +585,62 @@ button.danger{
 </select>
 </div>
 
-<div class="measure-title">Mesures aortiques</div>
+
+<div class="measure-title">
+Mesures aortiques
+</div>
+
 
 <div class="field">
-<label for="aortaRoot">Diamètre racine aortique (mm)</label>
+<label for="aortaRoot">
+Diamètre racine aortique (mm)
+</label>
+
 <input id="aortaRoot" type="text" placeholder="ex. 32">
 </div>
 
+
 <div class="field">
-<label for="aortaAsc">Diamètre aorte ascendante (mm)</label>
+<label for="aortaAsc">
+Diamètre aorte ascendante (mm)
+</label>
+
 <input id="aortaAsc" type="text" placeholder="ex. 34">
 </div>
 
+
 <div class="field">
-<label for="aortaRootZ">Z-score racine aortique</label>
+<label for="aortaRootZ">
+Z-score racine aortique
+</label>
+
 <input id="aortaRootZ" type="text" placeholder="valeur libre">
 </div>
 
+
 <div class="field">
-<label for="aortaAscZ">Z-score aorte ascendante</label>
+<label for="aortaAscZ">
+Z-score aorte ascendante
+</label>
+
 <input id="aortaAscZ" type="text" placeholder="valeur libre">
 </div>
 
 </div>
 
 
-<!-- 5. VA -->
+<!-- =========================
+     5. VALVE AORTIQUE
+========================= -->
+
 <div class="section">
+
 <h2>5. Valve aortique</h2>
+
 
 <div class="field">
 <label for="avVisual">Visualisation</label>
+
 <select id="avVisual">
 <option>Non renseigné</option>
 <option>Visualisation satisfaisante</option>
@@ -461,8 +648,10 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
 <label for="avMorph">Morphologie</label>
+
 <select id="avMorph">
 <option>Non renseigné</option>
 <option>Valve aortique tricuspide</option>
@@ -475,8 +664,10 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
 <label for="avOpening">Ouverture</label>
+
 <select id="avOpening">
 <option>Non renseigné</option>
 <option>Ouverture normale</option>
@@ -485,8 +676,10 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
 <label for="avStenosis">Sténose</label>
+
 <select id="avStenosis">
 <option>Non renseigné</option>
 <option>Pas de sténose</option>
@@ -496,8 +689,10 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
 <label for="avRegurg">Régurgitation</label>
+
 <select id="avRegurg">
 <option>Non renseigné</option>
 <option>Pas de régurgitation</option>
@@ -512,12 +707,18 @@ button.danger{
 </div>
 
 
-<!-- 6. VM -->
+<!-- =========================
+     6. VALVE MITRALE
+========================= -->
+
 <div class="section">
+
 <h2>6. Valve mitrale</h2>
+
 
 <div class="field">
 <label for="mvVisual">Visualisation</label>
+
 <select id="mvVisual">
 <option>Non renseigné</option>
 <option>Visualisation satisfaisante</option>
@@ -525,8 +726,10 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
 <label for="mvMorph">Morphologie</label>
+
 <select id="mvMorph">
 <option>Non renseigné</option>
 <option>Feuillets fins</option>
@@ -537,8 +740,10 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
 <label for="mvMovement">Mouvement</label>
+
 <select id="mvMovement">
 <option>Non renseigné</option>
 <option>Mouvement normal</option>
@@ -550,8 +755,10 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
 <label for="mvOpening">Ouverture</label>
+
 <select id="mvOpening">
 <option>Non renseigné</option>
 <option>Ouverture normale</option>
@@ -560,8 +767,10 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
 <label for="mvStenosis">Sténose</label>
+
 <select id="mvStenosis">
 <option>Non renseigné</option>
 <option>Pas de sténose</option>
@@ -571,8 +780,10 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
 <label for="mvRegurg">Régurgitation</label>
+
 <select id="mvRegurg">
 <option>Non renseigné</option>
 <option>Pas de régurgitation</option>
@@ -587,12 +798,18 @@ button.danger{
 </div>
 
 
-<!-- 7. OG -->
+<!-- =========================
+     7. OG
+========================= -->
+
 <div class="section">
+
 <h2>7. Oreillette gauche</h2>
+
 
 <div class="field">
 <label for="laSize">Taille</label>
+
 <select id="laSize">
 <option>Non renseigné</option>
 <option>De taille normale</option>
@@ -603,37 +820,62 @@ button.danger{
 </select>
 </div>
 
-<div class="measure-title">Mesures de l’oreillette gauche</div>
+
+<div class="measure-title">
+Mesures de l’oreillette gauche
+</div>
+
 
 <div class="field">
-<label for="laDiameter">Diamètre OG (mm)</label>
+<label for="laDiameter">
+Diamètre OG (mm)
+</label>
+
 <input id="laDiameter" type="text" placeholder="ex. 36">
 </div>
 
+
 <div class="field">
-<label for="laArea">Surface planimétrique OG (cm²)</label>
+<label for="laArea">
+Surface planimétrique OG (cm²)
+</label>
+
 <input id="laArea" type="text" placeholder="ex. 18">
 </div>
 
+
 <div class="field">
-<label for="laVolume">Volume OG (mL)</label>
+<label for="laVolume">
+Volume OG (mL)
+</label>
+
 <input id="laVolume" type="text" placeholder="ex. 60">
 </div>
 
+
 <div class="field">
-<label for="laVolumeIndex">Volume OG indexé (mL/m²)</label>
+<label for="laVolumeIndex">
+Volume OG indexé (mL/m²)
+</label>
+
 <input id="laVolumeIndex" type="text" placeholder="ex. 30">
 </div>
 
 </div>
 
 
-<!-- 8. OD -->
+<!-- =========================
+     8. OD
+========================= -->
+
 <div class="section">
+
 <h2>8. Oreillette droite</h2>
+
 
 <div class="field">
 <label for="raSize">Taille</label>
+
 <select id="raSize">
 <option>Non renseigné</option>
 <option>De taille normale</option>
@@ -644,42 +886,71 @@ button.danger{
 </select>
 </div>
 
-<div class="measure-title">Mesures de l’oreillette droite</div>
+
+<div class="measure-title">
+Mesures de l’oreillette droite
+</div>
+
 
 <div class="field">
-<label for="raHorizontal">Diamètre horizontal OD (mm)</label>
+<label for="raHorizontal">
+Diamètre horizontal OD (mm)
+</label>
+
 <input id="raHorizontal" type="text" placeholder="ex. 38">
 </div>
 
+
 <div class="field">
-<label for="raVertical">Diamètre vertical OD (mm)</label>
+<label for="raVertical">
+Diamètre vertical OD (mm)
+</label>
+
 <input id="raVertical" type="text" placeholder="ex. 45">
 </div>
 
+
 <div class="field">
-<label for="raArea">Surface planimétrique OD (cm²)</label>
+<label for="raArea">
+Surface planimétrique OD (cm²)
+</label>
+
 <input id="raArea" type="text" placeholder="ex. 17">
 </div>
 
+
 <div class="field">
-<label for="raVolume">Volume OD (mL)</label>
+<label for="raVolume">
+Volume OD (mL)
+</label>
+
 <input id="raVolume" type="text" placeholder="ex. 55">
 </div>
 
+
 <div class="field">
-<label for="raVolumeIndex">Volume OD indexé (mL/m²)</label>
+<label for="raVolumeIndex">
+Volume OD indexé (mL/m²)
+</label>
+
 <input id="raVolumeIndex" type="text" placeholder="ex. 28">
 </div>
 
 </div>
 
 
-<!-- 9. VD -->
+<!-- =========================
+     9. VD
+========================= -->
+
 <div class="section">
+
 <h2>9. Ventricule droit</h2>
+
 
 <div class="field">
 <label for="rvSize">Taille</label>
+
 <select id="rvSize">
 <option>Non renseigné</option>
 <option>Le ventricule droit paraît de taille normale</option>
@@ -690,8 +961,12 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
-<label for="rvFunction">Fonction systolique globale</label>
+<label for="rvFunction">
+Fonction systolique globale
+</label>
+
 <select id="rvFunction">
 <option>Non renseigné</option>
 <option>La fonction systolique globale du ventricule droit paraît conservée</option>
@@ -701,8 +976,12 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
-<label for="phProb">Probabilité d’HTP</label>
+<label for="phProb">
+Probabilité d’HTP
+</label>
+
 <select id="phProb">
 <option>Non renseigné</option>
 <option>Probabilité faible</option>
@@ -711,42 +990,59 @@ button.danger{
 </select>
 </div>
 
-<div class="measure-title">Mesures du ventricule droit et pression pulmonaire</div>
+
+<div class="measure-title">
+Mesures du ventricule droit et pression pulmonaire
+</div>
+
 
 <div class="field">
 <label for="paps">PAPs (mmHg)</label>
 <input id="paps" type="text" placeholder="ex. 30">
 </div>
 
+
 <div class="field">
 <label for="rvD1">Diamètre basal VD (mm)</label>
 <input id="rvD1" type="text" placeholder="ex. 35">
 </div>
+
 
 <div class="field">
 <label for="rvD2">Diamètre moyen VD (mm)</label>
 <input id="rvD2" type="text" placeholder="ex. 28">
 </div>
 
+
 <div class="field">
 <label for="rvD3">Longueur VD (mm)</label>
 <input id="rvD3" type="text" placeholder="ex. 72">
 </div>
 
+
 <div class="field">
-<label for="rvEdArea">Surface télédiastolique VD (cm²)</label>
+<label for="rvEdArea">
+Surface télédiastolique VD (cm²)
+</label>
+
 <input id="rvEdArea" type="text" placeholder="ex. 20">
 </div>
 
+
 <div class="field">
-<label for="rvEsArea">Surface télésystolique VD (cm²)</label>
+<label for="rvEsArea">
+Surface télésystolique VD (cm²)
+</label>
+
 <input id="rvEsArea" type="text" placeholder="ex. 10">
 </div>
+
 
 <div class="field">
 <label for="tapse">TAPSE (mm)</label>
 <input id="tapse" type="text" placeholder="ex. 22">
 </div>
+
 
 <div class="field">
 <label for="sPrime">S’ VD (cm/s)</label>
@@ -756,12 +1052,18 @@ button.danger{
 </div>
 
 
-<!-- 10. TRICUSPIDE -->
+<!-- =========================
+     10. TRICUSPIDE
+========================= -->
+
 <div class="section">
+
 <h2>10. Valve tricuspide</h2>
+
 
 <div class="field">
 <label for="tvVisual">Visualisation</label>
+
 <select id="tvVisual">
 <option>Non renseigné</option>
 <option>Visualisation satisfaisante</option>
@@ -769,8 +1071,10 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
 <label for="tvMorph">Morphologie</label>
+
 <select id="tvMorph">
 <option>Non renseigné</option>
 <option>Morphologie normale</option>
@@ -779,8 +1083,10 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
 <label for="tvOpening">Ouverture</label>
+
 <select id="tvOpening">
 <option>Non renseigné</option>
 <option>Ouverture normale</option>
@@ -789,8 +1095,10 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
 <label for="tvStenosis">Sténose</label>
+
 <select id="tvStenosis">
 <option>Non renseigné</option>
 <option>Pas de sténose</option>
@@ -800,8 +1108,10 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
 <label for="tvRegurg">Régurgitation</label>
+
 <select id="tvRegurg">
 <option>Non renseigné</option>
 <option>Pas de régurgitation</option>
@@ -816,12 +1126,18 @@ button.danger{
 </div>
 
 
-<!-- 11. PULMONAIRE -->
+<!-- =========================
+     11. PULMONAIRE
+========================= -->
+
 <div class="section">
+
 <h2>11. Valve pulmonaire</h2>
+
 
 <div class="field">
 <label for="pvVisual">Visualisation</label>
+
 <select id="pvVisual">
 <option>Non renseigné</option>
 <option>Visualisation satisfaisante</option>
@@ -829,8 +1145,10 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
 <label for="pvMorph">Morphologie</label>
+
 <select id="pvMorph">
 <option>Non renseigné</option>
 <option>Morphologie normale</option>
@@ -839,8 +1157,10 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
 <label for="pvOpening">Ouverture</label>
+
 <select id="pvOpening">
 <option>Non renseigné</option>
 <option>Ouverture normale</option>
@@ -849,8 +1169,10 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
 <label for="pvStenosis">Sténose</label>
+
 <select id="pvStenosis">
 <option>Non renseigné</option>
 <option>Pas de sténose</option>
@@ -860,8 +1182,10 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
 <label for="pvRegurg">Régurgitation</label>
+
 <select id="pvRegurg">
 <option>Non renseigné</option>
 <option>Pas de régurgitation</option>
@@ -876,12 +1200,18 @@ button.danger{
 </div>
 
 
-<!-- 12. VCI -->
+<!-- =========================
+     12. VCI
+========================= -->
+
 <div class="section">
+
 <h2>12. VCI</h2>
+
 
 <div class="field">
 <label for="ivcVisual">Visualisation</label>
+
 <select id="ivcVisual">
 <option>Non renseigné</option>
 <option>Visualisation satisfaisante</option>
@@ -889,8 +1219,12 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
-<label for="ivcCollapse">Collapsus inspiratoire</label>
+<label for="ivcCollapse">
+Collapsus inspiratoire
+</label>
+
 <select id="ivcCollapse">
 <option>Non renseigné</option>
 <option>&gt;50%</option>
@@ -899,8 +1233,12 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
-<label for="rap">Pression oreillette droite estimée</label>
+<label for="rap">
+Pression oreillette droite estimée
+</label>
+
 <select id="rap">
 <option>Non renseigné</option>
 <option>3 mmHg</option>
@@ -910,22 +1248,37 @@ button.danger{
 </select>
 </div>
 
-<div class="measure-title">Mesure de la VCI</div>
+
+<div class="measure-title">
+Mesure de la VCI
+</div>
+
 
 <div class="field">
-<label for="ivcDiameter">Diamètre VCI (mm)</label>
+<label for="ivcDiameter">
+Diamètre VCI (mm)
+</label>
+
 <input id="ivcDiameter" type="text" placeholder="ex. 18">
 </div>
 
 </div>
 
 
-<!-- 13. PERICARDE -->
+<!-- =========================
+     13. PERICARDE
+========================= -->
+
 <div class="section">
+
 <h2>13. Péricarde</h2>
 
+
 <div class="field">
-<label for="pericardVisual">Visualisation</label>
+<label for="pericardVisual">
+Visualisation
+</label>
+
 <select id="pericardVisual">
 <option>Non renseigné</option>
 <option>Visualisation satisfaisante</option>
@@ -933,8 +1286,12 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
-<label for="effusion">Épanchement</label>
+<label for="effusion">
+Épanchement
+</label>
+
 <select id="effusion">
 <option>Non renseigné</option>
 <option>Absence d’épanchement péricardique</option>
@@ -945,8 +1302,12 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
-<label for="effusionLocation">Localisation</label>
+<label for="effusionLocation">
+Localisation
+</label>
+
 <select id="effusionLocation">
 <option>Non renseigné</option>
 <option>Circonférentiel</option>
@@ -954,8 +1315,12 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
-<label for="respVariation">Variation respiratoire transvalvulaire</label>
+<label for="respVariation">
+Variation respiratoire transvalvulaire
+</label>
+
 <select id="respVariation">
 <option>Non renseigné</option>
 <option>Pas de variation respiratoire significative</option>
@@ -966,8 +1331,12 @@ button.danger{
 </select>
 </div>
 
+
 <div class="field">
-<label for="tamponade">Signes de tamponnade</label>
+<label for="tamponade">
+Signes de tamponnade
+</label>
+
 <select id="tamponade">
 <option>Non renseigné</option>
 <option>Absence de signe échographique de tamponnade</option>
@@ -982,12 +1351,21 @@ button.danger{
 </div>
 
 
-<!-- 14. AUTRE -->
+<!-- =========================
+     14. AUTRE
+========================= -->
+
 <div class="section">
+
 <h2>14. Autre</h2>
 
+
 <div class="field">
-<label for="other">Éléments additionnels</label>
+
+<label for="other">
+Éléments additionnels
+</label>
+
 
 <select id="other" multiple size="6">
 
@@ -1021,6 +1399,7 @@ Aorte abdominale non dilatée
 
 </select>
 
+
 <div class="note">
 Plusieurs éléments peuvent être sélectionnés avec Cmd/Ctrl.
 </div>
@@ -1030,34 +1409,50 @@ Plusieurs éléments peuvent être sélectionnés avec Cmd/Ctrl.
 </div>
 
 
-<!-- 15. COMPTE RENDU -->
+<!-- =========================
+     15. COMPTE RENDU
+========================= -->
+
 <div class="section">
 
 <h2>15. Compte rendu</h2>
 
+
 <textarea
-  id="report"
-  placeholder="Le compte rendu apparaîtra ici..."
+id="report"
+placeholder="Le compte rendu apparaîtra ici..."
 ></textarea>
 
+
 <!-- BOUTONS DU BAS -->
+
 <div class="report-actions">
 
-  <button id="generateBottom" class="primary">
-    Générer le rapport
-  </button>
+<button id="generateBottom" class="primary">
+Générer le rapport
+</button>
 
-  <button id="copyBottom">
-    Copier le compte rendu
-  </button>
+<button id="copyBottom">
+Copier le compte rendu
+</button>
 
-  <button id="resetBottom" class="danger">
-    Réinitialiser
-  </button>
+<button id="resetBottom" class="danger">
+Réinitialiser
+</button>
+
+</div>
 
 </div>
 
+
+<!-- =========================
+     CRÉDIT DE L'APPLICATION
+========================= -->
+
+<div class="app-credit">
+Conçu et développé par Dr Haine Florent
 </div>
+
 
 </div>
 
@@ -1066,265 +1461,622 @@ Plusieurs éléments peuvent être sélectionnés avec Cmd/Ctrl.
 
 /* =========================================================
    UTILITAIRES
-   ========================================================= */
+========================================================= */
 
 function value(id){
   return document.getElementById(id).value;
 }
 
-function addIf(arr, text){
+
+function addIf(arr,text){
+
   if(text && text !== "Non renseigné"){
     arr.push(text);
   }
+
 }
 
-function addMeasure(arr, label, id, unit){
-  const v = document.getElementById(id).value.trim();
+
+function addMeasure(arr,label,id,unit){
+
+  const v =
+    document.getElementById(id).value.trim();
 
   if(v){
-    arr.push(label + " : " + v + (unit ? " " + unit : ""));
+
+    arr.push(
+      label +
+      " : " +
+      v +
+      (unit ? " " + unit : "")
+    );
+
   }
+
 }
 
 
 /* =========================================================
+   SIGNATURE
+========================================================= */
+
+const SIGNATURE =
+  "Dr Haine Florent, médecin assistant en cardiologie";
+
+
+/* =========================================================
    GENERATION DU COMPTE RENDU
-   ========================================================= */
+========================================================= */
 
 function generateReport(){
 
-  const r = [];
+  const r=[];
+
 
   /* 1. VG */
 
-  const lvSize = value("lvSize");
-  const lvWall = value("lvWall");
-  const lvHType = value("lvHType");
-  const basalBulge = value("basalBulge");
+  const lvSize=value("lvSize");
+  const lvWall=value("lvWall");
+  const lvHType=value("lvHType");
+  const basalBulge=value("basalBulge");
 
-  addIf(r, lvSize === "De taille normale"
-    ? "Ventricule gauche de taille normale."
-    : lvSize);
+
+  if(lvSize !== "Non renseigné"){
+
+    if(lvSize === "De taille normale"){
+
+      r.push(
+        "Ventricule gauche de taille normale."
+      );
+
+    }else{
+
+      r.push(lvSize + ".");
+
+    }
+
+  }
+
 
   if(lvWall !== "Non renseigné"){
-    if(lvWall === "Épaisseur pariétale normale"){
-      r.push("Épaisseur pariétale normale.");
-    }else if(lvWall === "Hypertrophie du VG"){
-      r.push("Hypertrophie du ventricule gauche.");
-    }else if(lvWall === "Mal visualisé"){
-      r.push("Ventricule gauche mal visualisé.");
+
+    if(
+      lvWall ===
+      "Épaisseur pariétale normale"
+    ){
+
+      r.push(
+        "Épaisseur pariétale normale."
+      );
+
+    }else if(
+      lvWall ===
+      "Hypertrophie du VG"
+    ){
+
+      r.push(
+        "Hypertrophie du ventricule gauche."
+      );
+
+    }else if(
+      lvWall ===
+      "Mal visualisé"
+    ){
+
+      r.push(
+        "Ventricule gauche mal visualisé."
+      );
+
     }
+
   }
 
-  if(lvWall === "Hypertrophie du VG" &&
-     lvHType !== "Non renseigné"){
+
+  if(
+    lvWall === "Hypertrophie du VG" &&
+    lvHType !== "Non renseigné"
+  ){
+
     r.push(lvHType + ".");
+
   }
 
-  addIf(r, basalBulge);
 
-  addMeasure(r,"Diamètre télédiastolique VG","lvDd","mm");
-  addMeasure(r,"Diamètre télésystolique VG","lvDs","mm");
-  addMeasure(r,"Épaisseur septale","septalThickness","mm");
-  addMeasure(r,"Volume télédiastolique VG","lvEdv","mL");
-  addMeasure(r,"Volume télésystolique VG","lvEsv","mL");
-  addMeasure(r,"Volume télédiastolique indexé","lvEdvi","mL/m²");
-  addMeasure(r,"Volume télésystolique indexé","lvEsvi","mL/m²");
+  addIf(r,basalBulge);
 
 
-  /* 2. Fonction systolique */
+  addMeasure(
+    r,
+    "Diamètre télédiastolique VG",
+    "lvDd",
+    "mm"
+  );
 
-  const ef = value("ef");
+  addMeasure(
+    r,
+    "Diamètre télésystolique VG",
+    "lvDs",
+    "mm"
+  );
+
+  addMeasure(
+    r,
+    "Épaisseur septale",
+    "septalThickness",
+    "mm"
+  );
+
+  addMeasure(
+    r,
+    "Volume télédiastolique VG",
+    "lvEdv",
+    "mL"
+  );
+
+  addMeasure(
+    r,
+    "Volume télésystolique VG",
+    "lvEsv",
+    "mL"
+  );
+
+  addMeasure(
+    r,
+    "Volume télédiastolique indexé",
+    "lvEdvi",
+    "mL/m²"
+  );
+
+  addMeasure(
+    r,
+    "Volume télésystolique indexé",
+    "lvEsvi",
+    "mL/m²"
+  );
+
+
+  /* 2. FONCTION SYSTOLIQUE */
+
+  const ef=value("ef");
+
 
   if(ef !== "Non renseigné"){
+
     if(ef === "FEVG conservée"){
-      r.push("La fonction ventriculaire gauche est conservée.");
+
+      r.push(
+        "La fonction ventriculaire gauche est conservée."
+      );
+
     }else{
+
       r.push(ef + ".");
+
     }
+
   }
 
-  const efValue = document.getElementById("efValue").value.trim();
+
+  const efValue =
+    document.getElementById("efValue")
+    .value.trim();
+
 
   if(efValue){
-    r.push("FEVG visuellement estimée à " + efValue + ".");
+
+    r.push(
+      "FEVG visuellement estimée à " +
+      efValue +
+      "."
+    );
+
   }
 
-  const wallMotion = value("wallMotion");
 
-  addIf(r, wallMotion);
+  addIf(
+    r,
+    value("wallMotion")
+  );
 
 
-  /* 3. Diastolique */
+  /* 3. DIASTOLIQUE */
 
-  addIf(r, value("diastolic"));
-  addIf(r, value("filling"));
+  addIf(
+    r,
+    value("diastolic")
+  );
 
-  const mitralFlow = value("mitralFlow");
+  addIf(
+    r,
+    value("filling")
+  );
+
+
+  const mitralFlow =
+    value("mitralFlow");
+
 
   if(mitralFlow !== "Non renseigné"){
-    r.push("Flux mitral : " + mitralFlow + ".");
+
+    r.push(
+      "Flux mitral : " +
+      mitralFlow +
+      "."
+    );
+
   }
 
-  addMeasure(r,"E/e’","ee","");
-  addMeasure(r,"Onde E mitrale","eWave","cm/s");
-  addMeasure(r,"Onde A mitrale","aWave","cm/s");
-  addMeasure(r,"e’ septal","eseptal","cm/s");
-  addMeasure(r,"e’ latéral","elateral","cm/s");
+
+  addMeasure(
+    r,
+    "E/e’",
+    "ee",
+    ""
+  );
+
+  addMeasure(
+    r,
+    "Onde E mitrale",
+    "eWave",
+    "cm/s"
+  );
+
+  addMeasure(
+    r,
+    "Onde A mitrale",
+    "aWave",
+    "cm/s"
+  );
+
+  addMeasure(
+    r,
+    "e’ septal",
+    "eseptal",
+    "cm/s"
+  );
+
+  addMeasure(
+    r,
+    "e’ latéral",
+    "elateral",
+    "cm/s"
+  );
 
 
-  /* 4. Aorte */
+  /* 4. AORTE */
 
-  const aorta = value("aorta");
+  const aorta=value("aorta");
+
 
   if(aorta !== "Non renseigné"){
+
     if(aorta === "Dimensions normales"){
-      r.push("Racine aortique et partie débutante de l’aorte ascendante tubulaire de dimensions normales.");
+
+      r.push(
+        "Racine aortique et partie débutante de l’aorte ascendante tubulaire de dimensions normales."
+      );
+
     }else{
-      r.push(aorta + ".");
+
+      r.push(
+        aorta + "."
+      );
+
     }
+
   }
 
-  addMeasure(r,"Diamètre racine aortique","aortaRoot","mm");
-  addMeasure(r,"Diamètre aorte ascendante","aortaAsc","mm");
-  addMeasure(r,"Z-score racine aortique","aortaRootZ","");
-  addMeasure(r,"Z-score aorte ascendante","aortaAscZ","");
+
+  addMeasure(
+    r,
+    "Diamètre racine aortique",
+    "aortaRoot",
+    "mm"
+  );
+
+  addMeasure(
+    r,
+    "Diamètre aorte ascendante",
+    "aortaAsc",
+    "mm"
+  );
+
+  addMeasure(
+    r,
+    "Z-score racine aortique",
+    "aortaRootZ",
+    ""
+  );
+
+  addMeasure(
+    r,
+    "Z-score aorte ascendante",
+    "aortaAscZ",
+    ""
+  );
 
 
-  /* 5. Valve aortique */
+  /* 5. VA */
 
-  addIf(r, value("avVisual"));
-  addIf(r, value("avMorph"));
-  addIf(r, value("avOpening"));
-  addIf(r, value("avStenosis"));
-  addIf(r, value("avRegurg"));
+  addIf(r,value("avVisual"));
+  addIf(r,value("avMorph"));
+  addIf(r,value("avOpening"));
+  addIf(r,value("avStenosis"));
+  addIf(r,value("avRegurg"));
 
 
-  /* 6. Valve mitrale */
+  /* 6. VM */
 
-  addIf(r, value("mvVisual"));
-  addIf(r, value("mvMorph"));
-  addIf(r, value("mvMovement"));
-  addIf(r, value("mvOpening"));
-  addIf(r, value("mvStenosis"));
-  addIf(r, value("mvRegurg"));
+  addIf(r,value("mvVisual"));
+  addIf(r,value("mvMorph"));
+  addIf(r,value("mvMovement"));
+  addIf(r,value("mvOpening"));
+  addIf(r,value("mvStenosis"));
+  addIf(r,value("mvRegurg"));
 
 
   /* 7. OG */
 
-  addIf(r, value("laSize"));
+  addIf(r,value("laSize"));
 
-  addMeasure(r,"Diamètre OG","laDiameter","mm");
-  addMeasure(r,"Surface planimétrique OG","laArea","cm²");
-  addMeasure(r,"Volume OG","laVolume","mL");
-  addMeasure(r,"Volume OG indexé","laVolumeIndex","mL/m²");
+  addMeasure(
+    r,
+    "Diamètre OG",
+    "laDiameter",
+    "mm"
+  );
+
+  addMeasure(
+    r,
+    "Surface planimétrique OG",
+    "laArea",
+    "cm²"
+  );
+
+  addMeasure(
+    r,
+    "Volume OG",
+    "laVolume",
+    "mL"
+  );
+
+  addMeasure(
+    r,
+    "Volume OG indexé",
+    "laVolumeIndex",
+    "mL/m²"
+  );
 
 
   /* 8. OD */
 
-  addIf(r, value("raSize"));
+  addIf(r,value("raSize"));
 
-  addMeasure(r,"Diamètre horizontal OD","raHorizontal","mm");
-  addMeasure(r,"Diamètre vertical OD","raVertical","mm");
-  addMeasure(r,"Surface planimétrique OD","raArea","cm²");
-  addMeasure(r,"Volume OD","raVolume","mL");
-  addMeasure(r,"Volume OD indexé","raVolumeIndex","mL/m²");
+  addMeasure(
+    r,
+    "Diamètre horizontal OD",
+    "raHorizontal",
+    "mm"
+  );
+
+  addMeasure(
+    r,
+    "Diamètre vertical OD",
+    "raVertical",
+    "mm"
+  );
+
+  addMeasure(
+    r,
+    "Surface planimétrique OD",
+    "raArea",
+    "cm²"
+  );
+
+  addMeasure(
+    r,
+    "Volume OD",
+    "raVolume",
+    "mL"
+  );
+
+  addMeasure(
+    r,
+    "Volume OD indexé",
+    "raVolumeIndex",
+    "mL/m²"
+  );
 
 
   /* 9. VD */
 
-  addIf(r, value("rvSize"));
-  addIf(r, value("rvFunction"));
+  addIf(r,value("rvSize"));
+  addIf(r,value("rvFunction"));
 
-  const ph = value("phProb");
+
+  const ph=value("phProb");
+
 
   if(ph !== "Non renseigné"){
-    r.push(ph + " d’hypertension pulmonaire.");
+
+    r.push(
+      ph +
+      " d’hypertension pulmonaire."
+    );
+
   }
 
-  addMeasure(r,"PAPs","paps","mmHg");
-  addMeasure(r,"Diamètre basal VD","rvD1","mm");
-  addMeasure(r,"Diamètre moyen VD","rvD2","mm");
-  addMeasure(r,"Longueur VD","rvD3","mm");
-  addMeasure(r,"Surface télédiastolique VD","rvEdArea","cm²");
-  addMeasure(r,"Surface télésystolique VD","rvEsArea","cm²");
-  addMeasure(r,"TAPSE","tapse","mm");
-  addMeasure(r,"S’ VD","sPrime","cm/s");
+
+  addMeasure(
+    r,
+    "PAPs",
+    "paps",
+    "mmHg"
+  );
+
+  addMeasure(
+    r,
+    "Diamètre basal VD",
+    "rvD1",
+    "mm"
+  );
+
+  addMeasure(
+    r,
+    "Diamètre moyen VD",
+    "rvD2",
+    "mm"
+  );
+
+  addMeasure(
+    r,
+    "Longueur VD",
+    "rvD3",
+    "mm"
+  );
+
+  addMeasure(
+    r,
+    "Surface télédiastolique VD",
+    "rvEdArea",
+    "cm²"
+  );
+
+  addMeasure(
+    r,
+    "Surface télésystolique VD",
+    "rvEsArea",
+    "cm²"
+  );
+
+  addMeasure(
+    r,
+    "TAPSE",
+    "tapse",
+    "mm"
+  );
+
+  addMeasure(
+    r,
+    "S’ VD",
+    "sPrime",
+    "cm/s"
+  );
 
 
-  /* 10. Tricuspide */
+  /* 10. TRICUSPIDE */
 
-  addIf(r, value("tvVisual"));
-  addIf(r, value("tvMorph"));
-  addIf(r, value("tvOpening"));
-  addIf(r, value("tvStenosis"));
-  addIf(r, value("tvRegurg"));
+  addIf(r,value("tvVisual"));
+  addIf(r,value("tvMorph"));
+  addIf(r,value("tvOpening"));
+  addIf(r,value("tvStenosis"));
+  addIf(r,value("tvRegurg"));
 
 
-  /* 11. Pulmonaire */
+  /* 11. PULMONAIRE */
 
-  addIf(r, value("pvVisual"));
-  addIf(r, value("pvMorph"));
-  addIf(r, value("pvOpening"));
-  addIf(r, value("pvStenosis"));
-  addIf(r, value("pvRegurg"));
+  addIf(r,value("pvVisual"));
+  addIf(r,value("pvMorph"));
+  addIf(r,value("pvOpening"));
+  addIf(r,value("pvStenosis"));
+  addIf(r,value("pvRegurg"));
 
 
   /* 12. VCI */
 
-  addIf(r, value("ivcVisual"));
-  addIf(r, value("ivcCollapse"));
-  addIf(r, value("rap"));
-
-  addMeasure(r,"Diamètre VCI","ivcDiameter","mm");
+  addIf(r,value("ivcVisual"));
+  addIf(r,value("ivcCollapse"));
+  addIf(r,value("rap"));
 
 
-  /* 13. Péricarde */
+  addMeasure(
+    r,
+    "Diamètre VCI",
+    "ivcDiameter",
+    "mm"
+  );
 
-  addIf(r, value("pericardVisual"));
-  addIf(r, value("effusion"));
-  addIf(r, value("effusionLocation"));
-  addIf(r, value("respVariation"));
-  addIf(r, value("tamponade"));
+
+  /* 13. PERICARDE */
+
+  addIf(r,value("pericardVisual"));
+  addIf(r,value("effusion"));
+  addIf(r,value("effusionLocation"));
+  addIf(r,value("respVariation"));
+  addIf(r,value("tamponade"));
 
 
-  /* 14. Autre */
+  /* 14. AUTRE */
 
-  const other = document.getElementById("other");
+  const other =
+    document.getElementById("other");
 
-  Array.from(other.selectedOptions).forEach(option => {
-    r.push(option.value + ".");
+
+  Array.from(
+    other.selectedOptions
+  ).forEach(option => {
+
+    r.push(
+      option.value + "."
+    );
+
   });
 
 
-  /* RESULTAT */
+  /* =========================
+     SIGNATURE
+  ========================= */
+
+  let report = r.join(" ").trim();
+
+
+  if(report){
+
+    report +=
+      "\n\n" +
+      SIGNATURE;
+
+  }else{
+
+    report =
+      SIGNATURE;
+
+  }
+
 
   document.getElementById("report").value =
-    r.join(" ");
+    report;
 
 }
 
 
 /* =========================================================
    ECHOGRAPHIE NORMALE
-   ========================================================= */
+========================================================= */
 
 function normal(){
 
-  document.getElementById("report").value =
-  "Ventricule gauche de taille normale, avec une épaisseur pariétale normale. " +
-  "La fonction ventriculaire gauche est conservée, avec une FEVG visuellement estimée à 60 %. " +
-  "Absence de trouble de la cinétique segmentaire. " +
-  "Fonction diastolique normale avec des pressions de remplissage normales. " +
-  "Racine aortique et partie débutante de l’aorte ascendante tubulaire de dimensions normales. " +
-  "Absence de valvulopathie hémodynamiquement significative. " +
-  "Oreillette gauche et oreillette droite de taille normale. " +
-  "Le ventricule droit paraît de taille normale et sa fonction systolique globale paraît conservée. " +
-  "Pas d’argument échocardiographique en faveur d’une hypertension pulmonaire. " +
-  "VCI de calibre normal avec collapsus inspiratoire conservé. " +
-  "Absence d’épanchement péricardique.";
+  const normalReport =
+    "Ventricule gauche de taille normale, avec une épaisseur pariétale normale. " +
+    "La fonction ventriculaire gauche est conservée, avec une FEVG visuellement estimée à 60 %. " +
+    "Absence de trouble de la cinétique segmentaire. " +
+    "Fonction diastolique normale avec des pressions de remplissage normales. " +
+    "Racine aortique et partie débutante de l’aorte ascendante tubulaire de dimensions normales. " +
+    "Absence de valvulopathie hémodynamiquement significative. " +
+    "Oreillette gauche et oreillette droite de taille normale. " +
+    "Le ventricule droit paraît de taille normale et sa fonction systolique globale paraît conservée. " +
+    "Pas d’argument échocardiographique en faveur d’une hypertension pulmonaire. " +
+    "VCI de calibre normal avec collapsus inspiratoire conservé. " +
+    "Absence d’épanchement péricardique.";
 
-  /* Pré-remplissage des rubriques */
+
+  document.getElementById("report").value =
+    normalReport +
+    "\n\n" +
+    SIGNATURE;
+
+
+  /* Pré-remplissage */
 
   document.getElementById("lvSize").value =
     "De taille normale";
@@ -1368,14 +2120,21 @@ function normal(){
   document.getElementById("effusion").value =
     "Absence d’épanchement péricardique";
 
+
   /* Autre */
 
-  const other = document.getElementById("other");
+  const other =
+    document.getElementById("other");
 
-  Array.from(other.options).forEach(option => {
+
+  Array.from(
+    other.options
+  ).forEach(option => {
+
     option.selected =
       option.value ===
       "Absence de valvulopathie hémodynamiquement significative";
+
   });
 
 }
@@ -1383,27 +2142,34 @@ function normal(){
 
 /* =========================================================
    COPIER
-   ========================================================= */
+========================================================= */
 
 async function copyReport(){
 
   const report =
-    document.getElementById("report").value.trim();
+    document.getElementById("report")
+    .value
+    .trim();
+
 
   if(!report){
     return;
   }
 
+
   try{
 
-    await navigator.clipboard.writeText(report);
+    await navigator.clipboard
+      .writeText(report);
 
   }catch(e){
 
     const textarea =
       document.getElementById("report");
 
+    textarea.focus();
     textarea.select();
+
     document.execCommand("copy");
 
   }
@@ -1413,81 +2179,127 @@ async function copyReport(){
 
 /* =========================================================
    REINITIALISER
-   ========================================================= */
+========================================================= */
 
 function resetAll(){
 
-  document.querySelectorAll("select").forEach(select => {
+  document
+    .querySelectorAll("select")
+    .forEach(select => {
 
-    if(select.multiple){
+      if(select.multiple){
 
-      Array.from(select.options).forEach(option => {
-        option.selected = false;
-      });
+        Array.from(
+          select.options
+        ).forEach(option => {
 
-    }else{
+          option.selected=false;
 
-      select.selectedIndex = 0;
+        });
 
-    }
+      }else{
 
-  });
+        select.selectedIndex=0;
+
+      }
+
+    });
 
 
-  document.querySelectorAll("input").forEach(input => {
-    input.value = "";
-  });
+  document
+    .querySelectorAll("input")
+    .forEach(input => {
+
+      input.value="";
+
+    });
 
 
-  document.getElementById("report").value = "";
+  document.getElementById("report").value="";
 
 }
 
 
 /* =========================================================
    BOUTONS DU HAUT
-   ========================================================= */
+========================================================= */
 
-document.getElementById("normal")
-  .addEventListener("click", normal);
+document
+  .getElementById("normal")
+  .addEventListener(
+    "click",
+    normal
+  );
 
-document.getElementById("generate")
-  .addEventListener("click", generateReport);
 
-document.getElementById("copy")
-  .addEventListener("click", copyReport);
+document
+  .getElementById("generate")
+  .addEventListener(
+    "click",
+    generateReport
+  );
 
-document.getElementById("reset")
-  .addEventListener("click", resetAll);
+
+document
+  .getElementById("copy")
+  .addEventListener(
+    "click",
+    copyReport
+  );
+
+
+document
+  .getElementById("reset")
+  .addEventListener(
+    "click",
+    resetAll
+  );
 
 
 /* =========================================================
    BOUTONS DU BAS
-   ========================================================= */
+========================================================= */
 
-document.getElementById("generateBottom")
-  .addEventListener("click", generateReport);
+document
+  .getElementById("generateBottom")
+  .addEventListener(
+    "click",
+    generateReport
+  );
 
-document.getElementById("copyBottom")
-  .addEventListener("click", copyReport);
 
-document.getElementById("resetBottom")
-  .addEventListener("click", resetAll);
+document
+  .getElementById("copyBottom")
+  .addEventListener(
+    "click",
+    copyReport
+  );
+
+
+document
+  .getElementById("resetBottom")
+  .addEventListener(
+    "click",
+    resetAll
+  );
 
 
 /* =========================================================
    SERVICE WORKER
-   ========================================================= */
+========================================================= */
 
 if("serviceWorker" in navigator){
 
-  window.addEventListener("load", () => {
+  window.addEventListener(
+    "load",
+    () => {
 
-    navigator.serviceWorker.register(
-      "sw.js?v=6.4.0"
-    );
+      navigator.serviceWorker.register(
+        "sw.js?v=6.4.0"
+      );
 
-  });
+    }
+  );
 
 }
 
