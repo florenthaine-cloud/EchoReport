@@ -1,1 +1,9 @@
-{"name":"EchoReport","short_name":"EchoReport","start_url":".","display":"standalone","background_color":"#f5f6f8","theme_color":"#ffffff","lang":"fr"}
+{
+  "name": "EchoReport",
+  "short_name": "EchoReport",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f6f8",
+  "theme_color": "#ffffff",
+  "lang": "fr"
+}
