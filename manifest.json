@@ -1,7 +1,8 @@
+
 {
   "name": "EchoReport",
   "short_name": "EchoReport",
-  "description": "Générateur de compte rendu échocardiographique",
+  "description": "Générateur de compte rendu échocardiographique et registre ETT",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#f7f3f4",
