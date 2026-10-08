@@ -1,69 +1,1135 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#fff"><link rel="manifest" href="manifest.json"><title>EchoReport — V6.2</title>
-<style>*{box-sizing:border-box}body{margin:0;background:#f5f6f8;color:#17202a;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}header{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid #ddd;padding:14px 16px}h1{margin:0;font-size:21px}.sub{font-size:12px;color:#69727d;margin-top:3px}main{max-width:1050px;margin:auto;padding:14px}.card{background:#fff;border:1px solid #e0e4e8;border-radius:14px;padding:14px;margin-bottom:12px}h2{font-size:17px;margin:0 0 10px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.field label{display:block;font-size:13px;font-weight:650;margin-bottom:5px}select,input,textarea{width:100%;font:inherit;border:1px solid #cfd5dc;border-radius:9px;background:#fff;padding:9px}textarea{min-height:250px;line-height:1.55;resize:vertical}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:0;border-radius:10px;padding:11px 14px;font-weight:700;cursor:pointer}.primary{background:#111827;color:#fff}.secondary{background:#eef0f3;color:#17202a}.small{font-size:12px;color:#69727d}.full{grid-column:1/-1}@media(max-width:680px){.grid{grid-template-columns:1fr}main{padding:10px}}</style></head><body>
-<header><h1>EchoReport — Version 6.2</h1><div class="sub">Générateur de compte rendu échocardiographique · aucun calcul ni interprétation automatique</div></header><main>
-<div class="card"><div class="actions"><button class="btn primary" id="normal">Échographie normale</button><button class="btn secondary" id="reset">Réinitialiser</button><button class="btn secondary" id="copy">Copier le compte rendu</button></div><div class="small" style="margin-top:9px">« Non renseigné » n’est pas intégré au texte. « Mal visualisé(e) » est réservé aux éléments anatomiques.</div></div>
-<section class="card"><h2>1. Ventricule gauche</h2><div class="grid"><div class="field"><label>Taille</label><select id="lvSize"><option>Non renseigné</option><option>Ventricule gauche de taille normale.</option><option>Ventricule gauche discrètement dilaté.</option><option>Ventricule gauche modérément dilaté.</option><option>Ventricule gauche sévèrement dilaté.</option><option>Ventricule gauche mal visualisé.</option></select></div><div class="field"><label>Épaisseur pariétale</label><select id="lvWall"><option>Non renseigné</option><option>Épaisseur pariétale normale.</option><option>Hypertrophie du ventricule gauche.</option><option>Ventricule gauche mal visualisé.</option></select></div><div class="field"><label>Type d’hypertrophie</label><select id="lvPattern"><option>Non renseigné</option><option>Hypertrophie concentrique.</option><option>Hypertrophie excentrique.</option><option>Hypertrophie septale asymétrique.</option><option>Hypertrophie septale basale (sigmoïde).</option><option>Hypertrophie apicale.</option></select></div><div class="field"><label>Bourrelet baso-septal</label><select id="bulge"><option>Non renseigné</option><option>Absence de bourrelet baso-septal.</option><option>Discret bourrelet baso-septal.</option><option>Bourrelet baso-septal marqué.</option></select></div></div></section>
-<section class="card"><h2>2. Fonction systolique</h2><div class="grid"><div class="field"><label>FEVG</label><select id="ef"><option>Non renseigné</option><option>La fonction ventriculaire gauche est conservée.</option><option>La fonction ventriculaire gauche est légèrement diminuée.</option><option>La fonction ventriculaire gauche est modérément diminuée.</option><option>La fonction ventriculaire gauche est sévèrement diminuée.</option></select></div><div class="field"><label>Cinétique pariétale</label><select id="kin"><option>Non renseigné</option><option>Absence de trouble de la cinétique segmentaire.</option><option>Trouble de la cinétique segmentaire.</option><option>Cinétique segmentaire mal visualisée.</option></select></div></div></section>
-<section class="card"><h2>3. Fonction diastolique et pressions de remplissage</h2><div class="grid"><div class="field"><label>Fonction diastolique</label><select id="dia"><option>Non renseigné</option><option>Fonction diastolique normale.</option><option>Dysfonction diastolique de grade I.</option><option>Dysfonction diastolique de grade II.</option><option>Dysfonction diastolique de grade III.</option><option>Fonction diastolique indéterminée.</option></select></div><div class="field"><label>Pressions de remplissage</label><select id="fill"><option>Non renseigné</option><option>Pressions de remplissage normales.</option><option>Pressions de remplissage élevées.</option><option>Pressions de remplissage indéterminées.</option></select></div><div class="field"><label>Flux mitral</label><select id="mitralIn"><option>Non renseigné</option><option>Flux mitral normal.</option><option>Relaxation altérée.</option><option>Profil pseudonormal.</option><option>Profil restrictif.</option></select></div></div></section>
-<section class="card"><h2>4. Racine aortique et aorte ascendante tubulaire</h2><div class="grid"><div class="field"><label>Aspect</label><select id="aorta"><option>Non renseigné</option><option>Racine aortique et partie débutante de l’aorte ascendante tubulaire de dimensions normales.</option><option>Racine aortique et/ou aorte ascendante tubulaire dilatée(s).</option><option>Racine aortique et aorte ascendante tubulaire mal visualisées.</option></select></div></div></section>
-<section class="card"><h2>5. Valve aortique</h2><div class="grid"><div class="field"><label>Visualisation</label><select id="avVis"><option>Non renseigné</option><option>Visualisation satisfaisante.</option><option>Valve aortique mal visualisée.</option></select></div><div class="field"><label>Morphologie</label><select id="avMorph"><option>Non renseigné</option><option>Valve aortique tricuspide.</option><option>Valve aortique bicuspide.</option><option>Feuillets aortiques fins.</option><option>Feuillets aortiques épaissis.</option><option>Feuillets aortiques calcifiés.</option><option>Anneau aortique calcifié.</option><option>Une bicuspidie ne peut être exclue.</option></select></div><div class="field"><label>Ouverture</label><select id="avOpen"><option>Non renseigné</option><option>Ouverture normale.</option><option>Ouverture diminuée.</option><option>Ouverture sévèrement diminuée.</option></select></div><div class="field"><label>Sténose</label><select id="avSten"><option>Non renseigné</option><option>Pas de sténose.</option><option>Sténose discrète.</option><option>Sténose modérée.</option><option>Sténose sévère.</option></select></div><div class="field"><label>Régurgitation</label><select id="avReg"><option>Non renseigné</option><option>Pas de régurgitation.</option><option>Régurgitation minime.</option><option>Régurgitation discrète.</option><option>Régurgitation modérée.</option><option>Régurgitation sévère.</option><option>Absence de régurgitation significative.</option></select></div></div></section>
-<section class="card"><h2>6. Valve mitrale</h2><div class="grid"><div class="field"><label>Visualisation</label><select id="mvVis"><option>Non renseigné</option><option>Visualisation satisfaisante.</option><option>Valve mitrale mal visualisée.</option></select></div><div class="field"><label>Morphologie</label><select id="mvMorph"><option>Non renseigné</option><option>Feuillets fins.</option><option>Feuillets épaissis.</option><option>Feuillets calcifiés.</option><option>Feuillets remaniés.</option><option>Anneau mitral calcifié.</option><option>Végétation visualisée.</option></select></div><div class="field"><label>Mouvement</label><select id="mvMove"><option>Non renseigné</option><option>Mouvement normal.</option><option>Mouvement excessif.</option><option>Prolapsus.</option><option>Restriction.</option><option>Ballonnement.</option><option>Flail leaflet.</option></select></div><div class="field"><label>Ouverture</label><select id="mvOpen"><option>Non renseigné</option><option>Ouverture normale.</option><option>Ouverture diminuée.</option><option>Ouverture sévèrement diminuée.</option></select></div><div class="field"><label>Sténose</label><select id="mvSten"><option>Non renseigné</option><option>Pas de sténose.</option><option>Sténose discrète.</option><option>Sténose modérée.</option><option>Sténose sévère.</option></select></div><div class="field"><label>Régurgitation</label><select id="mvReg"><option>Non renseigné</option><option>Pas de régurgitation.</option><option>Régurgitation minime.</option><option>Régurgitation discrète.</option><option>Régurgitation modérée.</option><option>Régurgitation sévère.</option><option>Absence de régurgitation significative.</option></select></div></div></section>
-<section class="card"><h2>7. Oreillette gauche</h2><div class="grid"><div class="field"><label>Taille</label><select id="laSize"><option>Non renseigné</option><option>Oreillette gauche de taille normale.</option><option>Oreillette gauche discrètement dilatée.</option><option>Oreillette gauche modérément dilatée.</option><option>Oreillette gauche sévèrement dilatée.</option><option>Oreillette gauche mal visualisée.</option></select></div></div></section>
-<section class="card"><h2>8. Oreillette droite</h2><div class="grid"><div class="field"><label>Taille</label><select id="raSize"><option>Non renseigné</option><option>Oreillette droite de taille normale.</option><option>Oreillette droite discrètement dilatée.</option><option>Oreillette droite modérément dilatée.</option><option>Oreillette droite sévèrement dilatée.</option><option>Oreillette droite mal visualisée.</option></select></div></div></section>
-<section class="card"><h2>9. Ventricule droit</h2><div class="grid"><div class="field"><label>Taille</label><select id="rvSize"><option>Non renseigné</option><option>Le ventricule droit paraît de taille normale.</option><option>Le ventricule droit paraît discrètement dilaté.</option><option>Le ventricule droit paraît modérément dilaté.</option><option>Le ventricule droit paraît sévèrement dilaté.</option><option>Le ventricule droit est mal visualisé.</option></select></div><div class="field"><label>Fonction systolique globale</label><select id="rvFn"><option>Non renseigné</option><option>La fonction systolique globale du ventricule droit paraît conservée.</option><option>La fonction systolique globale du ventricule droit paraît discrètement diminuée.</option><option>La fonction systolique globale du ventricule droit paraît modérément diminuée.</option><option>La fonction systolique globale du ventricule droit paraît sévèrement diminuée.</option></select></div><div class="field"><label>Probabilité d’HTP</label><select id="phProb"><option>Non renseigné</option><option>Probabilité faible d’hypertension pulmonaire.</option><option>Probabilité possible d’hypertension pulmonaire.</option><option>Probabilité probable d’hypertension pulmonaire.</option></select></div></div></section>
-<section class="card"><h2>10. Valve tricuspide</h2><div class="grid"><div class="field"><label>Visualisation</label><select id="tvVis"><option>Non renseigné</option><option>Visualisation satisfaisante.</option><option>Valve tricuspide mal visualisée.</option></select></div><div class="field"><label>Morphologie</label><select id="tvMorph"><option>Non renseigné</option><option>Morphologie normale.</option><option>Feuillets épaissis.</option><option>Feuillets remaniés.</option></select></div><div class="field"><label>Ouverture</label><select id="tvOpen"><option>Non renseigné</option><option>Ouverture normale.</option><option>Ouverture diminuée.</option><option>Ouverture sévèrement diminuée.</option></select></div><div class="field"><label>Sténose</label><select id="tvSten"><option>Non renseigné</option><option>Pas de sténose.</option><option>Sténose tricuspide discrète.</option><option>Sténose tricuspide modérée.</option><option>Sténose tricuspide sévère.</option></select></div><div class="field"><label>Régurgitation</label><select id="tvReg"><option>Non renseigné</option><option>Pas de régurgitation.</option><option>Régurgitation minime.</option><option>Régurgitation discrète.</option><option>Régurgitation modérée.</option><option>Régurgitation sévère.</option><option>Absence de régurgitation significative.</option></select></div></div></section>
-<section class="card"><h2>11. Valve pulmonaire</h2><div class="grid"><div class="field"><label>Visualisation</label><select id="pvVis"><option>Non renseigné</option><option>Visualisation satisfaisante.</option><option>Valve pulmonaire mal visualisée.</option></select></div><div class="field"><label>Morphologie</label><select id="pvMorph"><option>Non renseigné</option><option>Morphologie normale.</option><option>Feuillets épaissis.</option><option>Feuillets remaniés.</option></select></div><div class="field"><label>Ouverture</label><select id="pvOpen"><option>Non renseigné</option><option>Ouverture normale.</option><option>Ouverture diminuée.</option><option>Ouverture sévèrement diminuée.</option></select></div><div class="field"><label>Sténose</label><select id="pvSten"><option>Non renseigné</option><option>Pas de sténose.</option><option>Sténose pulmonaire discrète.</option><option>Sténose pulmonaire modérée.</option><option>Sténose pulmonaire sévère.</option></select></div><div class="field"><label>Régurgitation</label><select id="pvReg"><option>Non renseigné</option><option>Pas de régurgitation.</option><option>Régurgitation minime.</option><option>Régurgitation discrète.</option><option>Régurgitation modérée.</option><option>Régurgitation sévère.</option><option>Absence de régurgitation significative.</option></select></div></div></section>
-<section class="card"><h2>12. VCI</h2><div class="grid"><div class="field"><label>Visualisation</label><select id="ivcVis"><option>Non renseigné</option><option>Visualisation satisfaisante.</option><option>VCI mal visualisée.</option></select></div><div class="field"><label>Collapsus inspiratoire</label><select id="ivcCol"><option>Non renseigné</option><option>&gt; 50 %.</option><option>&lt; 50 %.</option><option>Non évalué.</option></select></div><div class="field"><label>Pression oreillette droite estimée</label><select id="rap"><option>Non renseigné</option><option>3 mmHg.</option><option>8 mmHg.</option><option>15 mmHg.</option><option>Non estimable.</option></select></div></div></section>
-<section class="card"><h2>13. Péricarde</h2><div class="grid"><div class="field"><label>Visualisation</label><select id="perVis"><option>Non renseigné</option><option>Visualisation satisfaisante.</option><option>Péricarde mal visualisé.</option></select></div><div class="field"><label>Épanchement</label><select id="eff"><option>Non renseigné</option><option>Absence d’épanchement péricardique.</option><option>Épanchement péricardique minime.</option><option>Épanchement péricardique léger.</option><option>Épanchement péricardique modéré.</option><option>Épanchement péricardique sévère.</option></select></div><div class="field"><label>Localisation</label><select id="effLoc"><option>Non renseigné</option><option>Épanchement circonférentiel.</option><option>Épanchement localisé.</option></select></div><div class="field"><label>Variation respiratoire transvalvulaire</label><select id="resp"><option>Non renseigné</option><option>Pas de variation respiratoire significative.</option><option>Variation respiratoire significative du flux mitral.</option><option>Variation respiratoire significative du flux tricuspide.</option><option>Variation respiratoire significative du flux aortique.</option><option>Variations respiratoires significatives des flux transvalvulaires.</option></select></div><div class="field"><label>Signes de tamponnade</label><select id="tam"><option>Non renseigné</option><option>Absence de signe échographique de tamponnade.</option><option>Collapsus de l’oreillette droite.</option><option>Collapsus du ventricule droit.</option><option>VCI pléthorique.</option><option>Interdépendance ventriculaire.</option><option>Tamponnade.</option></select></div></div></section>
-<section class="card"><h2>Mesures libres</h2><div class="grid"><div class="field"><label>FEVG visuellement estimée (optionnel)</label><input id="efv" placeholder="ex. 60 % ou 55–60 %"></div><div class="field"><label>E/e’ (optionnel)</label><input id="ee" placeholder="valeur libre"></div><div class="field"><label>Diamètre racine aortique (mm)</label><input id="aoroot" placeholder="valeur libre"></div><div class="field"><label>Diamètre aorte ascendante (mm)</label><input id="aoasc" placeholder="valeur libre"></div><div class="field"><label>Z-score (libre)</label><input id="zscore" placeholder="valeur libre"></div><div class="field"><label>OG surface planimétrique (cm²)</label><input id="laArea" placeholder="valeur libre"></div><div class="field"><label>OG volume indexé (mL/m²)</label><input id="laVol" placeholder="valeur libre"></div><div class="field"><label>OD surface planimétrique (cm²)</label><input id="raArea" placeholder="valeur libre"></div><div class="field"><label>OD volume indexé (mL/m²)</label><input id="raVol" placeholder="valeur libre"></div><div class="field"><label>PAPs (mmHg)</label><input id="paps" placeholder="valeur libre"></div><div class="field"><label>Diamètre VCI (mm)</label><input id="ivcD" placeholder="valeur libre"></div></div></section><section class="card"><h2>14. Autre</h2><div class="field full"><label>Éléments additionnels</label><select id="other" multiple size="7">
-<option>Absence de valvulopathie hémodynamiquement significative.</option><option>Absence de shunt intracardiaque évident au Doppler couleur.</option><option>Absence de thrombus intracavitaire visualisé.</option><option>Absence de végétation valvulaire visualisée.</option><option>Absence de masse intracardiaque visualisée.</option><option>Absence de désynchronisation mécanique évidente.</option><option>Aorte abdominale non dilatée.</option></select></div><div class="small">Plusieurs éléments peuvent être sélectionnés avec Cmd/Ctrl.</div></section>
-<section class="card"><h2>15. Compte rendu</h2><textarea id="report" readonly placeholder="Le compte rendu apparaîtra ici…"></textarea></section><script>
-const selectIds=["lvSize", "lvWall", "lvPattern", "bulge", "ef", "kin", "dia", "fill", "mitralIn", "aorta", "avVis", "avMorph", "avOpen", "avSten", "avReg", "mvVis", "mvMorph", "mvMove", "mvOpen", "mvSten", "mvReg", "laSize", "raSize", "rvSize", "rvFn", "phProb", "tvVis", "tvMorph", "tvOpen", "tvSten", "tvReg", "pvVis", "pvMorph", "pvOpen", "pvSten", "pvReg", "ivcVis", "ivcCol", "rap", "perVis", "eff", "effLoc", "resp", "tam"], inputIds=["efv", "ee", "aoroot", "aoasc", "zscore", "laArea", "laVol", "raArea", "raVol", "paps", "ivcD"];
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fff">
+<link rel="manifest" href="manifest.json">
+<title>EchoReport — V6.2</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#f5f6f8;
+  color:#17202a;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
+}
+header{
+  position:sticky;
+  top:0;
+  z-index:5;
+  background:#fff;
+  border-bottom:1px solid #ddd;
+  padding:14px 16px
+}
+h1{margin:0;font-size:21px}
+.sub{font-size:12px;color:#69727d;margin-top:3px}
+main{max-width:1050px;margin:auto;padding:14px}
+.card{
+  background:#fff;
+  border:1px solid #e0e4e8;
+  border-radius:14px;
+  padding:14px;
+  margin-bottom:12px
+}
+h2{font-size:17px;margin:0 0 10px}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px
+}
+.field label{
+  display:block;
+  font-size:13px;
+  font-weight:650;
+  margin-bottom:5px
+}
+select,input,textarea{
+  width:100%;
+  font:inherit;
+  border:1px solid #cfd5dc;
+  border-radius:9px;
+  background:#fff;
+  padding:9px
+}
+textarea{
+  min-height:250px;
+  line-height:1.55;
+  resize:vertical
+}
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap
+}
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:11px 14px;
+  font-weight:700;
+  cursor:pointer
+}
+.primary{background:#111827;color:#fff}
+.secondary{background:#eef0f3;color:#17202a}
+.small{font-size:12px;color:#69727d}
+.full{grid-column:1/-1}
+
+@media(max-width:680px){
+  .grid{grid-template-columns:1fr}
+  main{padding:10px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>EchoReport — Version 6.2</h1>
+  <div class="sub">
+    Générateur de compte rendu échocardiographique · aucun calcul ni interprétation automatique
+  </div>
+</header>
+
+<main>
+
+<div class="card">
+  <div class="actions">
+    <button class="btn primary" id="normal">Échographie normale</button>
+    <button class="btn secondary" id="reset">Réinitialiser</button>
+    <button class="btn secondary" id="copy">Copier le compte rendu</button>
+  </div>
+
+  <div class="small" style="margin-top:9px">
+    « Non renseigné » n’est pas intégré au texte.
+    « Mal visualisé(e) » est réservé aux éléments anatomiques.
+  </div>
+</div>
+
+
+<!-- 1. VENTRICULE GAUCHE -->
+<section class="card">
+<h2>1. Ventricule gauche</h2>
+
+<div class="grid">
+
+<div class="field">
+<label>Taille</label>
+<select id="lvSize">
+<option>Non renseigné</option>
+<option>Ventricule gauche de taille normale.</option>
+<option>Ventricule gauche discrètement dilaté.</option>
+<option>Ventricule gauche modérément dilaté.</option>
+<option>Ventricule gauche sévèrement dilaté.</option>
+<option>Ventricule gauche mal visualisé.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Épaisseur pariétale</label>
+<select id="lvWall">
+<option>Non renseigné</option>
+<option>Épaisseur pariétale normale.</option>
+<option>Hypertrophie du ventricule gauche.</option>
+<option>Ventricule gauche mal visualisé.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Type d’hypertrophie</label>
+<select id="lvPattern">
+<option>Non renseigné</option>
+<option>Hypertrophie concentrique.</option>
+<option>Hypertrophie excentrique.</option>
+<option>Hypertrophie septale asymétrique.</option>
+<option>Hypertrophie septale basale (sigmoïde).</option>
+<option>Hypertrophie apicale.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Bourrelet baso-septal</label>
+<select id="bulge">
+<option>Non renseigné</option>
+<option>Absence de bourrelet baso-septal.</option>
+<option>Discret bourrelet baso-septal.</option>
+<option>Bourrelet baso-septal marqué.</option>
+</select>
+</div>
+
+</div>
+</section>
+
+
+<!-- 2. FONCTION SYSTOLIQUE -->
+<section class="card">
+<h2>2. Fonction systolique</h2>
+
+<div class="grid">
+
+<div class="field">
+<label>FEVG</label>
+<select id="ef">
+<option>Non renseigné</option>
+<option>La fonction ventriculaire gauche est conservée.</option>
+<option>La fonction ventriculaire gauche est légèrement diminuée.</option>
+<option>La fonction ventriculaire gauche est modérément diminuée.</option>
+<option>La fonction ventriculaire gauche est sévèrement diminuée.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Cinétique pariétale</label>
+<select id="kin">
+<option>Non renseigné</option>
+<option>Absence de trouble de la cinétique segmentaire.</option>
+<option>Trouble de la cinétique segmentaire.</option>
+<option>Cinétique segmentaire mal visualisée.</option>
+</select>
+</div>
+
+</div>
+</section>
+
+
+<!-- 3. DIASTOLIQUE -->
+<section class="card">
+<h2>3. Fonction diastolique et pressions de remplissage</h2>
+
+<div class="grid">
+
+<div class="field">
+<label>Fonction diastolique</label>
+<select id="dia">
+<option>Non renseigné</option>
+<option>Fonction diastolique normale.</option>
+<option>Dysfonction diastolique de grade I.</option>
+<option>Dysfonction diastolique de grade II.</option>
+<option>Dysfonction diastolique de grade III.</option>
+<option>Fonction diastolique indéterminée.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Pressions de remplissage</label>
+<select id="fill">
+<option>Non renseigné</option>
+<option>Pressions de remplissage normales.</option>
+<option>Pressions de remplissage élevées.</option>
+<option>Pressions de remplissage indéterminées.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Flux mitral</label>
+<select id="mitralIn">
+<option>Non renseigné</option>
+<option>Flux mitral normal.</option>
+<option>Relaxation altérée.</option>
+<option>Profil pseudonormal.</option>
+<option>Profil restrictif.</option>
+</select>
+</div>
+
+</div>
+</section>
+
+
+<!-- 4. AORTE -->
+<section class="card">
+<h2>4. Racine aortique et aorte ascendante tubulaire</h2>
+
+<div class="grid">
+
+<div class="field">
+<label>Aspect</label>
+<select id="aorta">
+<option>Non renseigné</option>
+<option>Racine aortique et partie débutante de l’aorte ascendante tubulaire de dimensions normales.</option>
+<option>Racine aortique et/ou aorte ascendante tubulaire dilatée(s).</option>
+<option>Racine aortique et aorte ascendante tubulaire mal visualisées.</option>
+</select>
+</div>
+
+</div>
+</section>
+
+
+<!-- 5. VALVE AORTIQUE -->
+<section class="card">
+<h2>5. Valve aortique</h2>
+
+<div class="grid">
+
+<div class="field">
+<label>Visualisation</label>
+<select id="avVis">
+<option>Non renseigné</option>
+<option>Visualisation satisfaisante.</option>
+<option>Valve aortique mal visualisée.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Morphologie</label>
+<select id="avMorph">
+<option>Non renseigné</option>
+<option>Valve aortique tricuspide.</option>
+<option>Valve aortique bicuspide.</option>
+<option>Feuillets aortiques fins.</option>
+<option>Feuillets aortiques épaissis.</option>
+<option>Feuillets aortiques calcifiés.</option>
+<option>Anneau aortique calcifié.</option>
+<option>Une bicuspidie ne peut être exclue.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Ouverture</label>
+<select id="avOpen">
+<option>Non renseigné</option>
+<option>Ouverture normale.</option>
+<option>Ouverture diminuée.</option>
+<option>Ouverture sévèrement diminuée.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Sténose</label>
+<select id="avSten">
+<option>Non renseigné</option>
+<option>Pas de sténose.</option>
+<option>Sténose discrète.</option>
+<option>Sténose modérée.</option>
+<option>Sténose sévère.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Régurgitation</label>
+<select id="avReg">
+<option>Non renseigné</option>
+<option>Pas de régurgitation.</option>
+<option>Régurgitation minime.</option>
+<option>Régurgitation discrète.</option>
+<option>Régurgitation modérée.</option>
+<option>Régurgitation sévère.</option>
+<option>Absence de régurgitation significative.</option>
+</select>
+</div>
+
+</div>
+</section>
+
+
+<!-- 6. MITRALE -->
+<section class="card">
+<h2>6. Valve mitrale</h2>
+
+<div class="grid">
+
+<div class="field">
+<label>Visualisation</label>
+<select id="mvVis">
+<option>Non renseigné</option>
+<option>Visualisation satisfaisante.</option>
+<option>Valve mitrale mal visualisée.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Morphologie</label>
+<select id="mvMorph">
+<option>Non renseigné</option>
+<option>Feuillets fins.</option>
+<option>Feuillets épaissis.</option>
+<option>Feuillets calcifiés.</option>
+<option>Feuillets remaniés.</option>
+<option>Anneau mitral calcifié.</option>
+<option>Végétation visualisée.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Mouvement</label>
+<select id="mvMove">
+<option>Non renseigné</option>
+<option>Mouvement normal.</option>
+<option>Mouvement excessif.</option>
+<option>Prolapsus.</option>
+<option>Restriction.</option>
+<option>Ballonnement.</option>
+<option>Flail leaflet.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Ouverture</label>
+<select id="mvOpen">
+<option>Non renseigné</option>
+<option>Ouverture normale.</option>
+<option>Ouverture diminuée.</option>
+<option>Ouverture sévèrement diminuée.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Sténose</label>
+<select id="mvSten">
+<option>Non renseigné</option>
+<option>Pas de sténose.</option>
+<option>Sténose discrète.</option>
+<option>Sténose modérée.</option>
+<option>Sténose sévère.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Régurgitation</label>
+<select id="mvReg">
+<option>Non renseigné</option>
+<option>Pas de régurgitation.</option>
+<option>Régurgitation minime.</option>
+<option>Régurgitation discrète.</option>
+<option>Régurgitation modérée.</option>
+<option>Régurgitation sévère.</option>
+<option>Absence de régurgitation significative.</option>
+</select>
+</div>
+
+</div>
+</section>
+
+
+<!-- 7. OG -->
+<section class="card">
+<h2>7. Oreillette gauche</h2>
+
+<div class="grid">
+
+<div class="field">
+<label>Taille</label>
+<select id="laSize">
+<option>Non renseigné</option>
+<option>Oreillette gauche de taille normale.</option>
+<option>Oreillette gauche discrètement dilatée.</option>
+<option>Oreillette gauche modérément dilatée.</option>
+<option>Oreillette gauche sévèrement dilatée.</option>
+<option>Oreillette gauche mal visualisée.</option>
+</select>
+</div>
+
+</div>
+</section>
+
+
+<!-- 8. OD -->
+<section class="card">
+<h2>8. Oreillette droite</h2>
+
+<div class="grid">
+
+<div class="field">
+<label>Taille</label>
+<select id="raSize">
+<option>Non renseigné</option>
+<option>Oreillette droite de taille normale.</option>
+<option>Oreillette droite discrètement dilatée.</option>
+<option>Oreillette droite modérément dilatée.</option>
+<option>Oreillette droite sévèrement dilatée.</option>
+<option>Oreillette droite mal visualisée.</option>
+</select>
+</div>
+
+</div>
+</section>
+
+
+<!-- 9. VD -->
+<section class="card">
+<h2>9. Ventricule droit</h2>
+
+<div class="grid">
+
+<div class="field">
+<label>Taille</label>
+<select id="rvSize">
+<option>Non renseigné</option>
+<option>Le ventricule droit paraît de taille normale.</option>
+<option>Le ventricule droit paraît discrètement dilaté.</option>
+<option>Le ventricule droit paraît modérément dilaté.</option>
+<option>Le ventricule droit paraît sévèrement dilaté.</option>
+<option>Le ventricule droit est mal visualisé.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Fonction systolique globale</label>
+<select id="rvFn">
+<option>Non renseigné</option>
+<option>La fonction systolique globale du ventricule droit paraît conservée.</option>
+<option>La fonction systolique globale du ventricule droit paraît discrètement diminuée.</option>
+<option>La fonction systolique globale du ventricule droit paraît modérément diminuée.</option>
+<option>La fonction systolique globale du ventricule droit paraît sévèrement diminuée.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Probabilité d’HTP</label>
+<select id="phProb">
+<option>Non renseigné</option>
+<option>Probabilité faible d’hypertension pulmonaire.</option>
+<option>Probabilité possible d’hypertension pulmonaire.</option>
+<option>Probabilité probable d’hypertension pulmonaire.</option>
+</select>
+</div>
+
+</div>
+</section>
+
+
+<!-- 10. TRICUSPIDE -->
+<section class="card">
+<h2>10. Valve tricuspide</h2>
+
+<div class="grid">
+
+<div class="field">
+<label>Visualisation</label>
+<select id="tvVis">
+<option>Non renseigné</option>
+<option>Visualisation satisfaisante.</option>
+<option>Valve tricuspide mal visualisée.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Morphologie</label>
+<select id="tvMorph">
+<option>Non renseigné</option>
+<option>Morphologie normale.</option>
+<option>Feuillets épaissis.</option>
+<option>Feuillets remaniés.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Ouverture</label>
+<select id="tvOpen">
+<option>Non renseigné</option>
+<option>Ouverture normale.</option>
+<option>Ouverture diminuée.</option>
+<option>Ouverture sévèrement diminuée.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Sténose</label>
+<select id="tvSten">
+<option>Non renseigné</option>
+<option>Pas de sténose.</option>
+<option>Sténose tricuspide discrète.</option>
+<option>Sténose tricuspide modérée.</option>
+<option>Sténose tricuspide sévère.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Régurgitation</label>
+<select id="tvReg">
+<option>Non renseigné</option>
+<option>Pas de régurgitation.</option>
+<option>Régurgitation minime.</option>
+<option>Régurgitation discrète.</option>
+<option>Régurgitation modérée.</option>
+<option>Régurgitation sévère.</option>
+<option>Absence de régurgitation significative.</option>
+</select>
+</div>
+
+</div>
+</section>
+
+
+<!-- 11. PULMONAIRE -->
+<section class="card">
+<h2>11. Valve pulmonaire</h2>
+
+<div class="grid">
+
+<div class="field">
+<label>Visualisation</label>
+<select id="pvVis">
+<option>Non renseigné</option>
+<option>Visualisation satisfaisante.</option>
+<option>Valve pulmonaire mal visualisée.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Morphologie</label>
+<select id="pvMorph">
+<option>Non renseigné</option>
+<option>Morphologie normale.</option>
+<option>Feuillets épaissis.</option>
+<option>Feuillets remaniés.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Ouverture</label>
+<select id="pvOpen">
+<option>Non renseigné</option>
+<option>Ouverture normale.</option>
+<option>Ouverture diminuée.</option>
+<option>Ouverture sévèrement diminuée.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Sténose</label>
+<select id="pvSten">
+<option>Non renseigné</option>
+<option>Pas de sténose.</option>
+<option>Sténose pulmonaire discrète.</option>
+<option>Sténose pulmonaire modérée.</option>
+<option>Sténose pulmonaire sévère.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Régurgitation</label>
+<select id="pvReg">
+<option>Non renseigné</option>
+<option>Pas de régurgitation.</option>
+<option>Régurgitation minime.</option>
+<option>Régurgitation discrète.</option>
+<option>Régurgitation modérée.</option>
+<option>Régurgitation sévère.</option>
+<option>Absence de régurgitation significative.</option>
+</select>
+</div>
+
+</div>
+</section>
+
+
+<!-- 12. VCI -->
+<section class="card">
+<h2>12. VCI</h2>
+
+<div class="grid">
+
+<div class="field">
+<label>Visualisation</label>
+<select id="ivcVis">
+<option>Non renseigné</option>
+<option>Visualisation satisfaisante.</option>
+<option>VCI mal visualisée.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Collapsus inspiratoire</label>
+<select id="ivcCol">
+<option>Non renseigné</option>
+<option>&gt; 50 %.</option>
+<option>&lt; 50 %.</option>
+<option>Non évalué.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Pression oreillette droite estimée</label>
+<select id="rap">
+<option>Non renseigné</option>
+<option>3 mmHg.</option>
+<option>8 mmHg.</option>
+<option>15 mmHg.</option>
+<option>Non estimable.</option>
+</select>
+</div>
+
+</div>
+</section>
+
+
+<!-- 13. PERICARDE -->
+<section class="card">
+<h2>13. Péricarde</h2>
+
+<div class="grid">
+
+<div class="field">
+<label>Visualisation</label>
+<select id="perVis">
+<option>Non renseigné</option>
+<option>Visualisation satisfaisante.</option>
+<option>Péricarde mal visualisé.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Épanchement</label>
+<select id="eff">
+<option>Non renseigné</option>
+<option>Absence d’épanchement péricardique.</option>
+<option>Épanchement péricardique minime.</option>
+<option>Épanchement péricardique léger.</option>
+<option>Épanchement péricardique modéré.</option>
+<option>Épanchement péricardique sévère.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Localisation</label>
+<select id="effLoc">
+<option>Non renseigné</option>
+<option>Épanchement circonférentiel.</option>
+<option>Épanchement localisé.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Variation respiratoire transvalvulaire</label>
+<select id="resp">
+<option>Non renseigné</option>
+<option>Pas de variation respiratoire significative.</option>
+<option>Variation respiratoire significative du flux mitral.</option>
+<option>Variation respiratoire significative du flux tricuspide.</option>
+<option>Variation respiratoire significative du flux aortique.</option>
+<option>Variations respiratoires significatives des flux transvalvulaires.</option>
+</select>
+</div>
+
+<div class="field">
+<label>Signes de tamponnade</label>
+<select id="tam">
+<option>Non renseigné</option>
+<option>Absence de signe échographique de tamponnade.</option>
+<option>Collapsus de l’oreillette droite.</option>
+<option>Collapsus du ventricule droit.</option>
+<option>VCI pléthorique.</option>
+<option>Interdépendance ventriculaire.</option>
+<option>Tamponnade.</option>
+</select>
+</div>
+
+</div>
+</section>
+
+
+<!-- MESURES LIBRES -->
+<section class="card">
+<h2>Mesures libres</h2>
+
+<div class="grid">
+
+<div class="field">
+<label>FEVG visuellement estimée (optionnel)</label>
+<input id="efv" placeholder="ex. 60 % ou 55–60 %">
+</div>
+
+<div class="field">
+<label>E/e’ (optionnel)</label>
+<input id="ee" placeholder="valeur libre">
+</div>
+
+<div class="field">
+<label>Diamètre racine aortique (mm)</label>
+<input id="aoroot" placeholder="valeur libre">
+</div>
+
+<div class="field">
+<label>Diamètre aorte ascendante (mm)</label>
+<input id="aoasc" placeholder="valeur libre">
+</div>
+
+<div class="field">
+<label>Z-score (libre)</label>
+<input id="zscore" placeholder="valeur libre">
+</div>
+
+<div class="field">
+<label>OG surface planimétrique (cm²)</label>
+<input id="laArea" placeholder="valeur libre">
+</div>
+
+<div class="field">
+<label>OG volume indexé (mL/m²)</label>
+<input id="laVol" placeholder="valeur libre">
+</div>
+
+<div class="field">
+<label>OD surface planimétrique (cm²)</label>
+<input id="raArea" placeholder="valeur libre">
+</div>
+
+<div class="field">
+<label>OD volume indexé (mL/m²)</label>
+<input id="raVol" placeholder="valeur libre">
+</div>
+
+<div class="field">
+<label>PAPs (mmHg)</label>
+<input id="paps" placeholder="valeur libre">
+</div>
+
+<div class="field">
+<label>Diamètre VCI (mm)</label>
+<input id="ivcD" placeholder="valeur libre">
+</div>
+
+</div>
+</section>
+
+
+<!-- 14. AUTRE -->
+<section class="card">
+<h2>14. Autre</h2>
+
+<div class="field full">
+<label>Éléments additionnels</label>
+
+<select id="other" multiple size="7">
+<option>Absence de valvulopathie hémodynamiquement significative.</option>
+<option>Absence de shunt intracardiaque évident au Doppler couleur.</option>
+<option>Absence de thrombus intracavitaire visualisé.</option>
+<option>Absence de végétation valvulaire visualisée.</option>
+<option>Absence de masse intracardiaque visualisée.</option>
+<option>Absence de désynchronisation mécanique évidente.</option>
+<option>Aorte abdominale non dilatée.</option>
+</select>
+
+</div>
+
+<div class="small">
+Plusieurs éléments peuvent être sélectionnés avec Cmd/Ctrl.
+</div>
+</section>
+
+
+<!-- 15. COMPTE RENDU -->
+<section class="card">
+<h2>15. Compte rendu</h2>
+<textarea id="report" readonly placeholder="Le compte rendu apparaîtra ici…"></textarea>
+</section>
+
+
+<script>
+
+const selectIds=[
+"lvSize",
+"lvWall",
+"lvPattern",
+"bulge",
+"ef",
+"kin",
+"dia",
+"fill",
+"mitralIn",
+"aorta",
+"avVis",
+"avMorph",
+"avOpen",
+"avSten",
+"avReg",
+"mvVis",
+"mvMorph",
+"mvMove",
+"mvOpen",
+"mvSten",
+"mvReg",
+"laSize",
+"raSize",
+"rvSize",
+"rvFn",
+"phProb",
+"tvVis",
+"tvMorph",
+"tvOpen",
+"tvSten",
+"tvReg",
+"pvVis",
+"pvMorph",
+"pvOpen",
+"pvSten",
+"pvReg",
+"ivcVis",
+"ivcCol",
+"rap",
+"perVis",
+"eff",
+"effLoc",
+"resp",
+"tam"
+];
+
+const inputIds=[
+"efv",
+"ee",
+"aoroot",
+"aoasc",
+"zscore",
+"laArea",
+"laVol",
+"raArea",
+"raVol",
+"paps",
+"ivcD"
+];
+
 const $=id=>document.getElementById(id);
-const clean=v=>(v&&v!=="Non renseigné")?v:"";
-function selectedOther(){return [...$("other").selectedOptions].map(o=>o.value);}
+
+const clean=v=>
+  (v && v!=="Non renseigné") ? v : "";
+
+function selectedOther(){
+  return [...$("other").selectedOptions].map(o=>o.value);
+}
+
 function generate(){
- let p=[];
- selectIds.forEach(id=>{const v=clean($(id).value);if(v)p.push(v)});
- if($("efv").value.trim()){
-   const i=p.findIndex(x=>x.startsWith("La fonction ventriculaire gauche"));
-   if(i>=0)p[i]=p[i].replace(/\.$/,"")+", avec une FEVG visuellement estimée à "+$("efv").value.trim()+".";
-   else p.push("FEVG visuellement estimée à "+$("efv").value.trim()+".");
- }
- const extra=[
-  ["ee","E/e’ à ","."],["aoroot","Diamètre de la racine aortique à "," mm."],
-  ["aoasc","Diamètre de l’aorte ascendante tubulaire à "," mm."],["zscore","Z-score à ","."],
-  ["laArea","Surface planimétrique de l’oreillette gauche à "," cm²."],["laVol","Volume indexé de l’oreillette gauche à "," mL/m²."],
-  ["raArea","Surface planimétrique de l’oreillette droite à "," cm²."],["raVol","Volume indexé de l’oreillette droite à "," mL/m²."],
-  ["paps","PAPs estimée à "," mmHg."],["ivcD","Diamètre de la VCI à "," mm."]
- ];
- extra.forEach(([id,a,b])=>{const v=$(id).value.trim();if(v)p.push(a+v+b)});
- p.push(...selectedOther());
- $("report").value=p.join(" ");
+
+  let p=[];
+
+  selectIds.forEach(id=>{
+    const v=clean($(id).value);
+    if(v) p.push(v);
+  });
+
+  if($("efv").value.trim()){
+
+    const i=p.findIndex(
+      x=>x.startsWith("La fonction ventriculaire gauche")
+    );
+
+    if(i>=0){
+
+      p[i]=p[i].replace(/\.$/,"")
+      +", avec une FEVG visuellement estimée à "
+      +$("efv").value.trim()
+      +".";
+
+    }else{
+
+      p.push(
+        "FEVG visuellement estimée à "
+        +$("efv").value.trim()
+        +"."
+      );
+    }
+  }
+
+  const extra=[
+
+    ["ee","E/e’ à ","."],
+
+    ["aoroot",
+     "Diamètre de la racine aortique à ",
+     " mm."],
+
+    ["aoasc",
+     "Diamètre de l’aorte ascendante tubulaire à ",
+     " mm."],
+
+    ["zscore",
+     "Z-score à ",
+     "."],
+
+    ["laArea",
+     "Surface planimétrique de l’oreillette gauche à ",
+     " cm²."],
+
+    ["laVol",
+     "Volume indexé de l’oreillette gauche à ",
+     " mL/m²."],
+
+    ["raArea",
+     "Surface planimétrique de l’oreillette droite à ",
+     " cm²."],
+
+    ["raVol",
+     "Volume indexé de l’oreillette droite à ",
+     " mL/m²."],
+
+    ["paps",
+     "PAPs estimée à ",
+     " mmHg."],
+
+    ["ivcD",
+     "Diamètre de la VCI à ",
+     " mm."]
+  ];
+
+  extra.forEach(([id,a,b])=>{
+    const v=$(id).value.trim();
+
+    if(v)
+      p.push(a+v+b);
+  });
+
+  p.push(...selectedOther());
+
+  $("report").value=p.join(" ");
 }
+
+
 function normal(){
- const vals={
- lvSize:"Ventricule gauche de taille normale.",lvWall:"Épaisseur pariétale normale.",ef:"La fonction ventriculaire gauche est conservée.",efv:"60 %",
- kin:"Absence de trouble de la cinétique segmentaire.",dia:"Fonction diastolique normale.",fill:"Pressions de remplissage normales.",
- aorta:"Racine aortique et partie débutante de l’aorte ascendante tubulaire de dimensions normales.",
- laSize:"Oreillette gauche de taille normale.",raSize:"Oreillette droite de taille normale.",
- rvSize:"Le ventricule droit paraît de taille normale.",rvFn:"La fonction systolique globale du ventricule droit paraît conservée.",
- phProb:"Probabilité faible d’hypertension pulmonaire.",ivcVis:"Visualisation satisfaisante.",ivcCol:"> 50 %.",eff:"Absence d’épanchement péricardique."
- };
- selectIds.forEach(id=>$(id).value="Non renseigné"); inputIds.forEach(id=>$(id).value="");
- Object.entries(vals).forEach(([id,v])=>$(id).value=v);
- [...$("other").options].forEach(o=>o.selected=(o.value==="Absence de valvulopathie hémodynamiquement significative."));
- $("report").value="Ventricule gauche de taille normale, avec une épaisseur pariétale normale. La fonction ventriculaire gauche est conservée, avec une FEVG visuellement estimée à 60 %. Absence de trouble de la cinétique segmentaire. Fonction diastolique normale avec des pressions de remplissage normales. Racine aortique et partie débutante de l’aorte ascendante tubulaire de dimensions normales. Absence de valvulopathie hémodynamiquement significative. Oreillette gauche et oreillette droite de taille normale. Le ventricule droit paraît de taille normale et sa fonction systolique globale paraît conservée. Pas d’argument échocardiographique en faveur d’une hypertension pulmonaire. VCI de calibre normal avec collapsus inspiratoire conservé. Absence d’épanchement péricardique.";
+
+  const vals={
+
+    lvSize:
+      "Ventricule gauche de taille normale.",
+
+    lvWall:
+      "Épaisseur pariétale normale.",
+
+    ef:
+      "La fonction ventriculaire gauche est conservée.",
+
+    efv:
+      "60 %",
+
+    kin:
+      "Absence de trouble de la cinétique segmentaire.",
+
+    dia:
+      "Fonction diastolique normale.",
+
+    fill:
+      "Pressions de remplissage normales.",
+
+    aorta:
+      "Racine aortique et partie débutante de l’aorte ascendante tubulaire de dimensions normales.",
+
+    laSize:
+      "Oreillette gauche de taille normale.",
+
+    raSize:
+      "Oreillette droite de taille normale.",
+
+    rvSize:
+      "Le ventricule droit paraît de taille normale.",
+
+    rvFn:
+      "La fonction systolique globale du ventricule droit paraît conservée.",
+
+    phProb:
+      "Probabilité faible d’hypertension pulmonaire.",
+
+    ivcVis:
+      "Visualisation satisfaisante.",
+
+    ivcCol:
+      "> 50 %.",
+
+    eff:
+      "Absence d’épanchement péricardique."
+  };
+
+  selectIds.forEach(
+    id=>$(id).value="Non renseigné"
+  );
+
+  inputIds.forEach(
+    id=>$(id).value=""
+  );
+
+  Object.entries(vals).forEach(
+    ([id,v])=>$(id).value=v
+  );
+
+  [...$("other").options].forEach(
+    o=>o.selected=
+      (o.value==="Absence de valvulopathie hémodynamiquement significative.")
+  );
+
+  $("report").value=
+    "Ventricule gauche de taille normale, avec une épaisseur pariétale normale. "
+    +"La fonction ventriculaire gauche est conservée, avec une FEVG visuellement estimée à 60 %. "
+    +"Absence de trouble de la cinétique segmentaire. "
+    +"Fonction diastolique normale avec des pressions de remplissage normales. "
+    +"Racine aortique et partie débutante de l’aorte ascendante tubulaire de dimensions normales. "
+    +"Absence de valvulopathie hémodynamiquement significative. "
+    +"Oreillette gauche et oreillette droite de taille normale. "
+    +"Le ventricule droit paraît de taille normale et sa fonction systolique globale paraît conservée. "
+    +"Pas d’argument échocardiographique en faveur d’une hypertension pulmonaire. "
+    +"VCI de calibre normal avec collapsus inspiratoire conservé. "
+    +"Absence d’épanchement péricardique.";
 }
+
+
 function reset(){
- selectIds.forEach(id=>$(id).value="Non renseigné");inputIds.forEach(id=>$(id).value="");
- [...$("other").options].forEach(o=>o.selected=false);$("report").value="";
+
+  selectIds.forEach(
+    id=>$(id).value="Non renseigné"
+  );
+
+  inputIds.forEach(
+    id=>$(id).value=""
+  );
+
+  [...$("other").options].forEach(
+    o=>o.selected=false
+  );
+
+  $("report").value="";
 }
-selectIds.forEach(id=>$(id).addEventListener("change",generate));
-inputIds.forEach(id=>$(id).addEventListener("input",generate));
-$("other").addEventListener("change",generate);
-$("normal").onclick=normal;$("reset").onclick=reset;
-$("copy").onclick=async()=>{try{await navigator.clipboard.writeText($("report").value);$("copy").textContent="Copié ✓";setTimeout(()=>$("copy").textContent="Copier le compte rendu",1200)}catch(e){$("report").select();document.execCommand("copy")}};
-if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js");
+
+
+selectIds.forEach(
+  id=>$(id).addEventListener("change",generate)
+);
+
+inputIds.forEach(
+  id=>$(id).addEventListener("input",generate)
+);
+
+$("other").addEventListener(
+  "change",
+  generate
+);
+
+$("normal").onclick=normal;
+
+$("reset").onclick=reset;
+
+
+$("copy").onclick=async()=>{
+
+  try{
+
+    await navigator.clipboard.writeText(
+      $("report").value
+    );
+
+    $("copy").textContent="Copié ✓";
+
+    setTimeout(
+      ()=>$("copy").textContent="Copier le compte rendu",
+      1200
+    );
+
+  }catch(e){
+
+    $("report").select();
+    document.execCommand("copy");
+
+  }
+};
+
+
+/* Mise à jour forcée du nouveau Service Worker */
+if("serviceWorker" in navigator){
+
+  navigator.serviceWorker.register(
+    "sw.js?v=6.2.1"
+  );
+
+}
+
 </script>
-</main></body></html>
+
+</main>
+</body>
+</html>
