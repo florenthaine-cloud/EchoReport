@@ -1,16 +1,18 @@
 {
   "name": "EchoReport",
   "short_name": "EchoReport",
+  "description": "Générateur de compte rendu échocardiographique",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#f5f6f8",
-  "theme_color": "#ffffff",
-  "lang": "fr",
+  "background_color": "#f7f3f4",
+  "theme_color": "#a62632",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "apple-touch-icon.png",
       "sizes": "180x180",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
