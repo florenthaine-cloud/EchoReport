@@ -1,5 +1,6 @@
 
-const CACHE = "echoreport-v8-0-0";
+const CACHE_NAME = "echoreport-v8-1-0";
+
 const ASSETS = [
   "./",
   "./index.html",
@@ -9,10 +10,12 @@ const ASSETS = [
 
 self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE)
-      .then(cache => cache.addAll(ASSETS))
-      .then(() => self.skipWaiting())
+    caches.open(CACHE_NAME).then(cache =>
+      cache.addAll(ASSETS).catch(() => {})
+    )
   );
+
+  self.skipWaiting();
 });
 
 self.addEventListener("activate", event => {
@@ -20,31 +23,43 @@ self.addEventListener("activate", event => {
     caches.keys().then(keys =>
       Promise.all(
         keys
-          .filter(key => key !== CACHE)
+          .filter(key => key.startsWith("echoreport-") && key !== CACHE_NAME)
           .map(key => caches.delete(key))
       )
-    ).then(() => self.clients.claim())
+    )
   );
+
+  self.clients.claim();
 });
 
 self.addEventListener("fetch", event => {
-  if (event.request.mode === "navigate") {
-    event.respondWith(
-      fetch(event.request)
-        .then(response => {
-          const copy = response.clone();
-          caches.open(CACHE)
-            .then(cache => cache.put("./index.html", copy));
-          return response;
-        })
-        .catch(() => caches.match("./index.html"))
-    );
-    return;
-  }
+  if (event.request.method !== "GET") return;
 
   event.respondWith(
-    caches.match(event.request).then(
-      response => response || fetch(event.request)
-    )
+    fetch(event.request)
+      .then(response => {
+        if (response && response.ok) {
+          const copy = response.clone();
+
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, copy);
+          });
+        }
+
+        return response;
+      })
+      .catch(async () => {
+        const cached = await caches.match(event.request);
+
+        if (cached) return cached;
+
+        if (event.request.mode === "navigate") {
+          return (
+            await caches.match("./index.html")
+          ) || Response.error();
+        }
+
+        return Response.error();
+      })
   );
 });
