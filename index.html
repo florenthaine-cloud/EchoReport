@@ -147,7 +147,23 @@ textarea{min-height:240px;resize:vertical;line-height:1.55}
 <section class="section">
 <h2>2. Fonction systolique</h2>
 <div class="field"><label>FEVG</label><select id="ef"><option value="">Non renseigné</option><option>FEVG conservée</option><option>FEVG légèrement diminuée</option><option>FEVG modérément diminuée</option><option>FEVG sévèrement diminuée</option></select></div>
-<div class="field"><label>Cinétique pariétale</label><select id="wallMotion"><option value="">Non renseigné</option><option>Absence de trouble de la cinétique segmentaire</option><option>Trouble de la cinétique segmentaire</option><option>Mal visualisée</option></select></div>
+<div class="field">
+  <label for="wallMotion">Cinétique pariétale</label>
+  <select id="wallMotion">
+    <option value="">Non renseigné</option>
+    <option>Absence de trouble de la cinétique segmentaire</option>
+    <option>Trouble de la cinétique segmentaire</option>
+    <option>Mal visualisée</option>
+  </select>
+
+  <textarea
+    id="wallMotionDetails"
+    class="other-text"
+    placeholder="Caractériser le trouble : segments concernés, hypokinésie, akinésie, dyskinésie…"
+    rows="3"
+    hidden
+  ></textarea>
+</div>
 <div class="measure-title">Mesure de la FEVG</div>
 <label>FEVG visuellement estimée</label><input id="efValue" placeholder="ex. 60 % ou 55–60 %">
 </section>
@@ -367,7 +383,13 @@ function measure(label,id,unit){
   const v=val(id);
   return v?`${label} à ${v}${unit?" "+unit:""}`:"";
 }
+function updateWallMotionDetails(){
+  const show=val("wallMotion")==="Trouble de la cinétique segmentaire";
+  $("wallMotionDetails").hidden=!show;
+  if(!show)$("wallMotionDetails").value="";
+}
 
+$("wallMotion").addEventListener("change",updateWallMotionDetails);
 function resetForm(show=true){
   ids.forEach(id=>{
     const n=$(id);
