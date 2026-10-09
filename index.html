@@ -359,7 +359,10 @@ const ids=[
 "effusionLocation","respVariation","tamponade","other"
 ];
 
-function add(a,t){if(t)a.push(t.replace(/\s+/g," ").trim())}
+function add(a,t){
+  const text=String(t??"").replace(/\s+/g," ").trim();
+  if(text && text!==".") a.push(text);
+}
 function measure(label,id,unit){
   const v=val(id);
   return v?`${label} à ${v}${unit?" "+unit:""}`:"";
