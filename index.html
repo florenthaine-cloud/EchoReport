@@ -450,7 +450,16 @@ function generateReport(){
   if(ef)add(r,efv?`La fonction ventriculaire gauche est ${ef.replace(/^FEVG /,"").toLowerCase()}, avec une FEVG visuellement estimée à ${efv}.`:`${ef}.`);
   else if(efv)add(r,`FEVG visuellement estimée à ${efv}.`);
 
-  if(val("wallMotion"))add(r,val("wallMotion")+".");
+ const wallMotion=val("wallMotion");
+const wallMotionDetails=val("wallMotionDetails");
+
+if(wallMotion==="Trouble de la cinétique segmentaire"){
+  add(r,wallMotionDetails
+    ? `${wallMotion} : ${wallMotionDetails}.`
+    : `${wallMotion}.`);
+}else if(wallMotion){
+  add(r,wallMotion+".");
+}
   ["diastolic","filling","mitralInflow"].forEach(id=>{if(val(id))add(r,val(id)+".")});
 
   [["E/e’","ee",""],["Onde E mitrale","eWave","cm/s"],["Onde A mitrale","aWave","cm/s"],["e’ septal","eseptal","cm/s"],["e’ latéral","elateral","cm/s"]]
