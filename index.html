@@ -429,10 +429,10 @@ const SIGNATURE="Dr Haine Florent, médecin assistant en cardiologie";
 const $=id=>document.getElementById(id);
 const val=id=>(($(id)?.value)||"").trim();
 
-const ids=[
+const ids=
 "lvSize","lvWall","lvHypertrophy","basalBulge","lvLvedd","lvLvesd","lvSeptum","lvEdv","lvEsv","lvEdvi","lvEsvi",
 "ef","wallMotion","wallMotionDetails","efValue","diastolic","filling","mitralInflow","ee","eWave","aWave","eseptal","elateral",
-"aorticRootAspect","ascendingAortaAspect","aorticRoot","ascendingAorta","rootZ","ascendingZ","avVis","avMorph","avOpen","avStenosis","avReg",
+"aorticRootAspect","ascendingAortaAspect","aorticRoot","ascendingAorta","rootZ","ascendingZ","avVis","avMorph","avLeaflets","avCalcification","avOpen","avStenosis","avReg",
 "mvVis","mvMorph","mvMotion","mvOpen","mvStenosis","mvReg","laSize","laDiameter","laArea","laVolume","laVolumeIndex",
 "raSize","raHorizontal","raVertical","raArea","raVolume","raVolumeIndex","rvSize","rvFunction","phProbability","paps",
 "rvd1","rvd2","rvd3","rvAreaDiast","rvAreaSyst","tapse","sprime","tvVis","tvMorph","tvOpen","tvStenosis","tvReg",
@@ -725,9 +725,15 @@ addMeasures([
 ]);
 
   // 5. Valve aortique
-  addValve("La valve aortique", [
-    "avVis", "avMorph", "avOpen", "avStenosis", "avReg"
-  ], "aortic");
+addValve("La valve aortique", [
+  "avVis", "avMorph", "avOpen", "avStenosis", "avReg"
+], "aortic");
+
+const avLeaflets = value("avLeaflets");
+const avCalcification = value("avCalcification");
+
+if (avLeaflets) add(avLeaflets);
+if (avCalcification) add(avCalcification);
 
   // 6. Valve mitrale
   addValve("La valve mitrale", [
