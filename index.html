@@ -670,21 +670,29 @@ function generateReport() {
     ["onde e’ latérale", "elateral", "cm/s"]
   ]);
 
-  // 4. Aorte
-  const aorta = value("aorta");
+  // 4. Racine aortique
+const rootAspect = value("aorticRootAspect");
 
-  if (aorta === "Dimensions normales") {
-    add("Racine aortique et partie proximale de l’aorte ascendante tubulaire de dimensions normales");
-  } else if (aorta) {
-    add(`Racine aortique et partie proximale de l’aorte ascendante tubulaire : ${aorta.toLowerCase()}`);
-  }
+if (rootAspect) {
+  add(`Racine aortique : ${rootAspect.toLowerCase()}`);
+}
 
-  addMeasures([
-    ["diamètre de la racine aortique", "aorticRoot", "mm"],
-    ["diamètre de l’aorte ascendante", "ascendingAorta", "mm"],
-    ["Z-score de la racine aortique", "rootZ", ""],
-    ["Z-score de l’aorte ascendante", "ascendingZ", ""]
-  ]);
+addMeasures([
+  ["diamètre de la racine aortique", "aorticRoot", "mm"],
+  ["Z-score de la racine aortique", "rootZ", ""]
+]);
+
+// 5. Aorte ascendante tubulaire
+const ascendingAspect = value("ascendingAortaAspect");
+
+if (ascendingAspect) {
+  add(`Aorte ascendante tubulaire : ${ascendingAspect.toLowerCase()}`);
+}
+
+addMeasures([
+  ["diamètre de l’aorte ascendante tubulaire", "ascendingAorta", "mm"],
+  ["Z-score de l’aorte ascendante tubulaire", "ascendingZ", ""]
+]);
 
   // 5. Valve aortique
   addValve("La valve aortique", [
