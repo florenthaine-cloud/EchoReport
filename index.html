@@ -427,44 +427,122 @@ function normalEcho(){
   $("report").scrollIntoView({behavior:"smooth",block:"center"});
 }
 
-
 function generateReport() {
-  const sections = [];
+  const paragraphs = [];
 
-  function addSentence(text) {
-    const clean = String(text || "")
-      .replace(/\s+/g, " ")
-      .trim()
-      .replace(/[.;,\s]+$/, "");
-
-    if (clean) sections.push(clean + ".");
+  // Ajoute uniquement du texte renseigné et nettoie la ponctuation.
+  function add(text) {
+    text = String(text || "").replace(/\s+/g, " ").trim();
+    text = text.replace(/[.;,\s]+$/, "");
+    if (text) paragraphs.push(text + ".");
   }
 
-  function getMeasures(items) {
+  function value(id) {
+    return val(id);
+  }
+
+  function measures(items) {
     return items
       .map(([label, id, unit]) => {
-        const value = val(id);
-        return value ? `${label} à ${value}${unit ? " " + unit : ""}` : "";
+        const v = value(id);
+        return v ? `${label} à ${v}${unit ? " " + unit : ""}` : "";
       })
       .filter(Boolean);
   }
 
-  function addMeasures(items) {
-    const measures = getMeasures(items);
-    if (measures.length) addSentence(measures.join(", "));
+  function addMeasures(items, prefix) {
+    const list = measures(items);
+    if (!list.length) return;
+
+    if (prefix) {
+      add(`${prefix} ${joinNatural(list)}`);
+    } else {
+      add(joinNatural(list));
+    }
+  }
+
+  function joinNatural(items) {
+    if (items.length === 1) return items[0];
+    if (items.length === 2) return `${items[0]} et ${items[1]}`;
+    return `${items.slice(0, -1).join(", ")} et ${items[items.length - 1]}`;
+  }
+
+  function addValve(title, ids, type) {
+    const vis = value(ids[0]);
+    const morph = value(ids[1]);
+    const motion = type === "mitral" ? value(ids[2]) : "";
+    const open = value(ids[type === "mitral" ? 3 : 2]);
+    const stenosis = value(ids[type === "mitral" ? 4 : 3]);
+    const reg = value(ids[type === "mitral" ? 5 : 4]);
+
+    const details = [];
+
+    if (vis === "Mal visualisée") {
+      details.push("est mal visualisée");
+    }
+
+    if (morph) {
+      const normalized = morph
+        .replace(/^Valve aortique /, "")
+        .replace(/^Mauvaise visualisation des feuillets aortiques$/, "feuillets mal visualisés");
+
+      if (type === "aortic" && morph === "Valve aortique tricuspide") {
+        details.push("est tricuspide");
+      } else if (type === "aortic" && morph === "Valve aortique bicuspide") {
+        details.push("est bicuspide");
+      } else if (/^(Feuillets fins|Feuillets aortiques fins|Morphologie normale)$/.test(morph)) {
+        details.push("présente une morphologie normale");
+      } else {
+        details.push(normalized.charAt(0).toLowerCase() + normalized.slice(1));
+      }
+    }
+
+    if (motion) {
+      details.push(`avec un mouvement ${motion.toLowerCase()}`);
+    }
+
+    if (open) {
+      if (open === "Ouverture normale") {
+        details.push("avec une ouverture normale");
+      } else {
+        details.push(`avec une ${open.charAt(0).toLowerCase() + open.slice(1)}`);
+      }
+    }
+
+    if (stenosis) {
+      if (stenosis === "Pas de sténose") {
+        details.push("sans sténose");
+      } else {
+        details.push(`avec ${stenosis.charAt(0).toLowerCase() + stenosis.slice(1)}`);
+      }
+    }
+
+    if (reg) {
+      if (reg === "Pas de régurgitation") {
+        details.push("sans régurgitation");
+      } else if (reg === "Absence de régurgitation significative") {
+        details.push("sans régurgitation significative");
+      } else {
+        details.push(`avec ${reg.charAt(0).toLowerCase() + reg.slice(1)}`);
+      }
+    }
+
+    if (details.length) {
+      add(`${title} ${details.join(", ")}`);
+    }
   }
 
   // 1. Ventricule gauche
-  const lvSize = val("lvSize");
-  const lvWall = val("lvWall");
+  const lvSize = value("lvSize");
+  const lvWall = value("lvWall");
   const lvDescription = [];
 
   if (lvSize) {
-    lvDescription.push(
-      lvSize === "Mal visualisé"
-        ? "Le ventricule gauche est mal visualisé"
-        : `Ventricule gauche ${lvSize.toLowerCase()}`
-    );
+    if (lvSize === "Mal visualisé") {
+      lvDescription.push("Le ventricule gauche est mal visualisé");
+    } else {
+      lvDescription.push(`Ventricule gauche ${lvSize.toLowerCase()}`);
+    }
   }
 
   if (lvWall === "Épaisseur pariétale normale") {
@@ -472,219 +550,201 @@ function generateReport() {
   } else if (lvWall === "Hypertrophie du VG") {
     lvDescription.push("avec une hypertrophie du ventricule gauche");
   } else if (lvWall === "Mal visualisé" && lvSize !== "Mal visualisé") {
-    lvDescription.push("Épaisseur pariétale du ventricule gauche mal visualisée");
+    lvDescription.push("avec une épaisseur pariétale mal visualisée");
   }
 
-  if (lvDescription.length) addSentence(lvDescription.join(", "));
+  if (lvDescription.length) add(lvDescription.join(", "));
 
-  if (val("lvHypertrophy")) addSentence(val("lvHypertrophy"));
-  if (val("basalBulge")) addSentence(val("basalBulge"));
+  if (value("lvHypertrophy")) add(value("lvHypertrophy"));
+  if (value("basalBulge")) add(value("basalBulge"));
 
   addMeasures([
-    ["Diamètre télédiastolique", "lvLvedd", "mm"],
-    ["Diamètre télésystolique", "lvLvesd", "mm"],
-    ["Épaisseur septale", "lvSeptum", "mm"],
-    ["Volume télédiastolique", "lvEdv", "mL"],
-    ["Volume télésystolique", "lvEsv", "mL"],
-    ["Volume télédiastolique indexé", "lvEdvi", "mL/m²"],
-    ["Volume télésystolique indexé", "lvEsvi", "mL/m²"]
+    ["diamètre télédiastolique", "lvLvedd", "mm"],
+    ["diamètre télésystolique", "lvLvesd", "mm"],
+    ["épaisseur septale", "lvSeptum", "mm"],
+    ["volume télédiastolique", "lvEdv", "mL"],
+    ["volume télésystolique", "lvEsv", "mL"],
+    ["volume télédiastolique indexé", "lvEdvi", "mL/m²"],
+    ["volume télésystolique indexé", "lvEsvi", "mL/m²"]
   ]);
 
-  // 2. Fonction systolique et cinétique segmentaire
-  const ef = val("ef");
-  const efValue = val("efValue");
-  const wallMotion = val("wallMotion");
-  const wallMotionDetails = val("wallMotionDetails");
-
-  let systolicText = "";
+  // 2. Fonction systolique et cinétique
+  const ef = value("ef");
+  const efValue = value("efValue");
+  const motion = value("wallMotion");
+  const motionDetails = value("wallMotionDetails");
+  let systolic = "";
 
   if (ef === "FEVG conservée") {
-    systolicText = "Fonction systolique ventriculaire gauche conservée";
+    systolic = "Fonction systolique ventriculaire gauche conservée";
   } else if (ef) {
-    systolicText =
-      `Fonction systolique ventriculaire gauche ${ef.replace(/^FEVG /, "").toLowerCase()}`;
+    systolic = `Fonction systolique ventriculaire gauche ${ef.replace(/^FEVG /, "").toLowerCase()}`;
   }
 
   if (efValue) {
-    systolicText +=
-      `${systolicText ? ", avec" : "FEVG visuellement estimée à"} ${systolicText ? "une FEVG visuellement estimée à " : ""}${efValue}`;
+    systolic += systolic
+      ? `, avec une FEVG visuellement estimée à ${efValue}`
+      : `FEVG visuellement estimée à ${efValue}`;
   }
 
-  if (systolicText) {
-    if (wallMotion === "Absence de trouble de la cinétique segmentaire") {
-      systolicText += ", sans trouble de la cinétique segmentaire";
-    }
-    addSentence(systolicText);
-  } else if (wallMotion === "Absence de trouble de la cinétique segmentaire") {
-    addSentence("Absence de trouble de la cinétique segmentaire");
+  if (motion === "Absence de trouble de la cinétique segmentaire") {
+    systolic += systolic
+      ? ", sans trouble de la cinétique segmentaire"
+      : "Absence de trouble de la cinétique segmentaire";
   }
 
-  if (wallMotion === "Trouble de la cinétique segmentaire") {
-    addSentence(
-      wallMotionDetails
-        ? `Trouble de la cinétique segmentaire : ${wallMotionDetails}`
-        : wallMotion
-    );
-  } else if (wallMotion === "Mal visualisée") {
-    addSentence("Cinétique segmentaire mal visualisée");
+  if (systolic) add(systolic);
+
+  if (motion === "Trouble de la cinétique segmentaire") {
+    add(motionDetails
+      ? `Trouble de la cinétique segmentaire, caractérisé par : ${motionDetails}`
+      : "Trouble de la cinétique segmentaire");
+  } else if (motion === "Mal visualisée") {
+    add("La cinétique segmentaire est mal visualisée");
   }
 
-  // 3. Fonction diastolique et pressions de remplissage
-  const diastolic = val("diastolic");
-  const filling = val("filling");
-  const mitralInflow = val("mitralInflow");
+  // 3. Fonction diastolique
+  const diastolic = value("diastolic");
+  const filling = value("filling");
+  const inflow = value("mitralInflow");
 
   if (diastolic === "Fonction diastolique normale") {
     if (filling === "Pressions de remplissage normales") {
-      addSentence(
-        "Fonction diastolique normale, avec des pressions de remplissage normales"
-      );
+      add("Fonction diastolique normale, avec des pressions de remplissage normales");
     } else if (filling) {
-      addSentence(`Fonction diastolique normale, avec ${filling.toLowerCase()}`);
+      add(`Fonction diastolique normale, avec ${filling.charAt(0).toLowerCase() + filling.slice(1)}`);
     } else {
-      addSentence(diastolic);
+      add(diastolic);
     }
   } else {
-    if (diastolic) addSentence(diastolic);
-    if (filling) addSentence(filling);
+    if (diastolic) add(diastolic);
+    if (filling) add(filling);
   }
 
-  if (mitralInflow) addSentence(mitralInflow);
+  if (inflow) add(inflow);
 
   addMeasures([
-    ["Rapport E/e’", "ee", ""],
-    ["Onde E mitrale", "eWave", "cm/s"],
-    ["Onde A mitrale", "aWave", "cm/s"],
-    ["Onde e’ septale", "eseptal", "cm/s"],
-    ["Onde e’ latérale", "elateral", "cm/s"]
+    ["rapport E/e’", "ee", ""],
+    ["onde E mitrale", "eWave", "cm/s"],
+    ["onde A mitrale", "aWave", "cm/s"],
+    ["onde e’ septale", "eseptal", "cm/s"],
+    ["onde e’ latérale", "elateral", "cm/s"]
   ]);
 
-  // 4. Racine aortique et aorte ascendante
-  const aorta = val("aorta");
+  // 4. Aorte
+  const aorta = value("aorta");
 
   if (aorta === "Dimensions normales") {
-    addSentence(
-      "Racine aortique et partie proximale de l’aorte ascendante tubulaire de dimensions normales"
-    );
+    add("Racine aortique et partie proximale de l’aorte ascendante tubulaire de dimensions normales");
   } else if (aorta) {
-    addSentence(
-      `Racine aortique et partie proximale de l’aorte ascendante tubulaire : ${aorta.toLowerCase()}`
-    );
+    add(`Racine aortique et partie proximale de l’aorte ascendante tubulaire : ${aorta.toLowerCase()}`);
   }
 
   addMeasures([
-    ["Diamètre de la racine aortique", "aorticRoot", "mm"],
-    ["Diamètre de l’aorte ascendante", "ascendingAorta", "mm"],
+    ["diamètre de la racine aortique", "aorticRoot", "mm"],
+    ["diamètre de l’aorte ascendante", "ascendingAorta", "mm"],
     ["Z-score de la racine aortique", "rootZ", ""],
     ["Z-score de l’aorte ascendante", "ascendingZ", ""]
   ]);
 
-  // Fonction commune de description des valves
-  function addValve(title, ids) {
-    const details = ids.map(id => val(id)).filter(Boolean);
-    if (details.length) addSentence(`${title} : ${details.join(", ")}`);
-  }
-
   // 5. Valve aortique
-  addValve("Valve aortique", [
+  addValve("La valve aortique", [
     "avVis", "avMorph", "avOpen", "avStenosis", "avReg"
-  ]);
+  ], "aortic");
 
   // 6. Valve mitrale
-  addValve("Valve mitrale", [
+  addValve("La valve mitrale", [
     "mvVis", "mvMorph", "mvMotion", "mvOpen", "mvStenosis", "mvReg"
-  ]);
+  ], "mitral");
 
   // 7. Oreillette gauche
-  if (val("laSize")) {
-    addSentence(`Oreillette gauche ${val("laSize").toLowerCase()}`);
+  if (value("laSize")) {
+    add(`Oreillette gauche ${value("laSize").toLowerCase()}`);
   }
 
   addMeasures([
-    ["Diamètre de l’oreillette gauche", "laDiameter", "mm"],
-    ["Surface planimétrique de l’oreillette gauche", "laArea", "cm²"],
-    ["Volume de l’oreillette gauche", "laVolume", "mL"],
-    ["Volume indexé de l’oreillette gauche", "laVolumeIndex", "mL/m²"]
+    ["diamètre de l’oreillette gauche", "laDiameter", "mm"],
+    ["surface planimétrique de l’oreillette gauche", "laArea", "cm²"],
+    ["volume de l’oreillette gauche", "laVolume", "mL"],
+    ["volume indexé de l’oreillette gauche", "laVolumeIndex", "mL/m²"]
   ]);
 
   // 8. Oreillette droite
-  if (val("raSize")) {
-    addSentence(`Oreillette droite ${val("raSize").toLowerCase()}`);
+  if (value("raSize")) {
+    add(`Oreillette droite ${value("raSize").toLowerCase()}`);
   }
 
   addMeasures([
-    ["Diamètre horizontal de l’oreillette droite", "raHorizontal", "mm"],
-    ["Diamètre vertical de l’oreillette droite", "raVertical", "mm"],
-    ["Surface planimétrique de l’oreillette droite", "raArea", "cm²"],
-    ["Volume de l’oreillette droite", "raVolume", "mL"],
-    ["Volume indexé de l’oreillette droite", "raVolumeIndex", "mL/m²"]
+    ["diamètre horizontal de l’oreillette droite", "raHorizontal", "mm"],
+    ["diamètre vertical de l’oreillette droite", "raVertical", "mm"],
+    ["surface planimétrique de l’oreillette droite", "raArea", "cm²"],
+    ["volume de l’oreillette droite", "raVolume", "mL"],
+    ["volume indexé de l’oreillette droite", "raVolumeIndex", "mL/m²"]
   ]);
 
   // 9. Ventricule droit
-  if (val("rvSize")) addSentence(val("rvSize"));
-  if (val("rvFunction")) addSentence(val("rvFunction"));
+  if (value("rvSize")) add(value("rvSize"));
+  if (value("rvFunction")) add(value("rvFunction"));
 
-  if (val("phProbability")) {
-    addSentence(
-      `Probabilité d’hypertension pulmonaire : ${val("phProbability").toLowerCase()}`
-    );
+  if (value("phProbability")) {
+    add(`Probabilité d’hypertension pulmonaire : ${value("phProbability").toLowerCase()}`);
   }
 
   addMeasures([
     ["PAPs", "paps", "mmHg"],
-    ["Diamètre basal du ventricule droit", "rvd1", "mm"],
-    ["Diamètre moyen du ventricule droit", "rvd2", "mm"],
-    ["Longueur du ventricule droit", "rvd3", "mm"],
-    ["Surface télédiastolique du ventricule droit", "rvAreaDiast", "cm²"],
-    ["Surface télésystolique du ventricule droit", "rvAreaSyst", "cm²"],
+    ["diamètre basal du ventricule droit", "rvd1", "mm"],
+    ["diamètre moyen du ventricule droit", "rvd2", "mm"],
+    ["longueur du ventricule droit", "rvd3", "mm"],
+    ["surface télédiastolique du ventricule droit", "rvAreaDiast", "cm²"],
+    ["surface télésystolique du ventricule droit", "rvAreaSyst", "cm²"],
     ["TAPSE", "tapse", "mm"],
-    ["Onde S’ du ventricule droit", "sprime", "cm/s"]
+    ["onde S’ du ventricule droit", "sprime", "cm/s"]
   ]);
 
   // 10. Valve tricuspide
-  addValve("Valve tricuspide", [
+  addValve("La valve tricuspide", [
     "tvVis", "tvMorph", "tvOpen", "tvStenosis", "tvReg"
-  ]);
+  ], "tricuspid");
 
   // 11. Valve pulmonaire
-  addValve("Valve pulmonaire", [
+  addValve("La valve pulmonaire", [
     "pvVis", "pvMorph", "pvOpen", "pvStenosis", "pvReg"
-  ]);
+  ], "pulmonary");
 
   // 12. Veine cave inférieure
-  if (val("ivcVis")) {
-    addSentence(`Veine cave inférieure : ${val("ivcVis").toLowerCase()}`);
+  if (value("ivcVis")) {
+    add(`Veine cave inférieure : ${value("ivcVis").toLowerCase()}`);
   }
 
   addMeasures([
-    ["Diamètre de la veine cave inférieure", "ivcDiameter", "mm"]
+    ["diamètre de la veine cave inférieure", "ivcDiameter", "mm"]
   ]);
 
-  if (val("ivcCollapse")) {
-    addSentence(`Collapsus inspiratoire ${val("ivcCollapse")}`);
+  if (value("ivcCollapse")) {
+    add(`Collapsus inspiratoire ${value("ivcCollapse")}`);
   }
 
-  if (val("rap")) {
-    addSentence(`Pression auriculaire droite estimée à ${val("rap")}`);
+  if (value("rap")) {
+    add(`Pression auriculaire droite estimée à ${value("rap")}`);
   }
 
   // 13. Péricarde
-  if (val("pericardVis")) {
-    addSentence(`Péricarde : ${val("pericardVis").toLowerCase()}`);
+  if (value("pericardVis")) {
+    add(`Péricarde : ${value("pericardVis").toLowerCase()}`);
   }
 
-  ["effusion", "effusionLocation", "respVariation", "tamponade"]
-    .forEach(id => {
-      if (val(id)) addSentence(val(id));
-    });
+  if (value("effusion")) add(value("effusion"));
+  if (value("effusionLocation")) add(`Localisation ${value("effusionLocation").toLowerCase()}`);
+  if (value("respVariation")) add(value("respVariation"));
+  if (value("tamponade")) add(value("tamponade"));
 
-  // 14. Autres éléments sélectionnés
+  // 14. Autres éléments explicitement sélectionnés
   [...$("other").selectedOptions].forEach(option => {
-    if (option.value) addSentence(option.value);
+    if (option.value) add(option.value);
   });
 
-  // Assemblage final sans rubriques vides
-  const report = sections.join(" ");
+  // Compte rendu final : ordre conservé, champs vides omis.
+  const report = paragraphs.join(" ");
 
   $("report").value =
     (report || "Aucun élément renseigné.") + "\n\n" + SIGNATURE;
