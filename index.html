@@ -789,9 +789,18 @@ if (avCalcification) add(avCalcification);
     ["volume indexé de l’oreillette gauche", "laVolumeIndex", "mL/m²"]
   ]);
 
+  
   // 8. Oreillette droite
-  if (value("raSize")) {
-    add(`Oreillette droite ${value("raSize").toLowerCase()}`);
+  const raSize = value("raSize");
+
+  if (raSize) {
+    if (raSize === "De taille normale") {
+      add("Oreillette droite de taille normale");
+    } else if (raSize === "Mal visualisée") {
+      add("Oreillette droite mal visualisée");
+    } else {
+      add(`Oreillette droite ${raSize.toLowerCase()}`);
+    }
   }
 
   addMeasures([
@@ -801,6 +810,7 @@ if (avCalcification) add(avCalcification);
     ["volume de l’oreillette droite", "raVolume", "mL"],
     ["volume indexé de l’oreillette droite", "raVolumeIndex", "mL/m²"]
   ]);
+
 
   // 9. Ventricule droit
   if (value("rvSize")) add(value("rvSize"));
