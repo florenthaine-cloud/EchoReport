@@ -1,5 +1,5 @@
 
-const CACHE = "echoreport-v2-0-0";
+const CACHE = "echoreport-v6-5-0";
 
 const ASSETS = [
   "./",
