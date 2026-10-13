@@ -466,15 +466,15 @@ const SIGNATURE="Dr Haine Florent, médecin assistant en cardiologie";
 const $=id=>document.getElementById(id);
 const val=id=>(($(id)?.value)||"").trim();
 
-const ids=
-"lvSize","lvWall","lvHypertrophy","basalBulge","lvLvedd","lvLvesd","lvSeptum","lvEdv","lvEsv","lvEdvi","lvEsvi",
-"ef","wallMotion","wallMotionDetails","efValue","diastolic","filling","mitralInflow","ee","eWave","aWave","eseptal","elateral",
-"aorticRootAspect","ascendingAortaAspect","aorticRoot","ascendingAorta","rootZ","ascendingZ","avVis","avMorph","avLeaflets","avCalcification","avOpen","avStenosis","avReg",
-"mvVis","mvMorph","mvMotion","mvOpen","mvStenosis","mvReg","laSize","laDiameter","laArea","laVolume","laVolumeIndex",
-"raSize","raHorizontal","raVertical","raArea","raVolume","raVolumeIndex","rvSize","rvFunction","phProbability","paps",
-"rvd1","rvd2","rvd3","rvAreaDiast","rvAreaSyst","tapse","sprime","tvVis","tvMorph","tvOpen","tvStenosis","tvReg",
-"pvVis","pvMorph","pvOpen","pvStenosis","pvReg","ivcVis","ivcCollapse","rap","ivcDiameter","pericardVis","effusion",
-"effusionLocation","respVariation","tamponade","other"
+const ids = [
+  "lvSize","lvWall","lvHypertrophy","basalBulge","lvLvedd","lvLvesd","lvSeptum","lvEdv","lvEsv","lvEdvi","lvEsvi",
+  "ef","wallMotion","wallMotionDetails","efValue","diastolic","filling","mitralInflow","ee","eWave","aWave","eseptal","elateral",
+  "aorticRootAspect","ascendingAortaAspect","aorticRoot","ascendingAorta","rootZ","ascendingZ","avVis","avMorph","avLeaflets","avCalcification","avOpen","avStenosis","avReg",
+  "mvVis","mvMorph","mvMotion","mvOpen","mvStenosis","mvReg","laSize","laDiameter","laArea","laVolume","laVolumeIndex",
+  "raSize","raHorizontal","raVertical","raArea","raVolume","raVolumeIndex","rvSize","rvFunction","phProbability","paps",
+  "rvd1","rvd2","rvd3","rvAreaDiast","rvAreaSyst","tapse","sprime","tvVis","tvMorph","tvOpen","tvStenosis","tvReg",
+  "pvVis","pvMorph","pvOpen","pvStenosis","pvReg","ivcVis","ivcCollapse","rap","ivcDiameter","pericardVis","effusion",
+  "effusionLocation","respVariation","tamponade","other"
 ];
 
 function add(a,t){
