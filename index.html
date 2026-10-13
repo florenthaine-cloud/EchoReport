@@ -185,14 +185,48 @@ textarea{min-height:240px;resize:vertical;line-height:1.55}
 </section>
 
 <section class="section">
-<h2>4. Racine aortique et aorte ascendante tubulaire</h2>
-<label>Aspect</label><select id="aorta"><option value="">Non renseigné</option><option>Dimensions normales</option><option>Dilatée</option><option>Mal visualisée</option></select>
-<div class="measure-title">Mesures aortiques</div>
+<h2>4. Racine aortique</h2>
+<label>Aspect</label>
+<select id="aorticRootAspect">
+  <option value="">Non renseigné</option>
+  <option>Dimensions normales</option>
+  <option>Dilatée</option>
+  <option>Mal visualisée</option>
+</select>
+
+<div class="measure-title">Mesures de la racine aortique</div>
 <div class="grid">
-<div><label>Diamètre racine aortique (mm)</label><input id="aorticRoot" placeholder="ex. 32"></div>
-<div><label>Diamètre aorte ascendante (mm)</label><input id="ascendingAorta" placeholder="ex. 34"></div>
-<div><label>Z-score racine aortique</label><input id="rootZ" placeholder="valeur libre"></div>
-<div><label>Z-score aorte ascendante</label><input id="ascendingZ" placeholder="valeur libre"></div>
+  <div>
+    <label>Diamètre de la racine aortique (mm)</label>
+    <input id="aorticRoot" placeholder="ex. 32">
+  </div>
+  <div>
+    <label>Z-score de la racine aortique</label>
+    <input id="rootZ" placeholder="valeur libre">
+  </div>
+</div>
+</section>
+
+<section class="section">
+<h2>5. Aorte ascendante tubulaire</h2>
+<label>Aspect</label>
+<select id="ascendingAortaAspect">
+  <option value="">Non renseigné</option>
+  <option>Dimensions normales</option>
+  <option>Dilatée</option>
+  <option>Mal visualisée</option>
+</select>
+
+<div class="measure-title">Mesures de l’aorte ascendante tubulaire</div>
+<div class="grid">
+  <div>
+    <label>Diamètre de l’aorte ascendante (mm)</label>
+    <input id="ascendingAorta" placeholder="ex. 34">
+  </div>
+  <div>
+    <label>Z-score de l’aorte ascendante</label>
+    <input id="ascendingZ" placeholder="valeur libre">
+  </div>
 </div>
 </section>
 
