@@ -589,10 +589,14 @@ function generateReport() {
   }
 
   if (motion === "Absence de trouble de la cinétique segmentaire") {
-    systolic += systolic
-      ? ", sans trouble de la cinétique segmentaire"
-      : "Absence de trouble de la cinétique segmentaire";
-  }
+  systolic += systolic
+    ? ", sans trouble de la cinétique segmentaire"
+    : "Absence de trouble de la cinétique segmentaire";
+} else if (motion === "Hyperkinésie du ventricule gauche") {
+  systolic += systolic
+    ? ". Hyperkinésie du ventricule gauche"
+    : "Hyperkinésie du ventricule gauche";
+}
 
   if (systolic) add(systolic);
 
